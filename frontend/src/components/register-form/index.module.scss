@@ -1,0 +1,39 @@
+.formControlStyle {
+    background-color: #ffffff;
+    margin: auto;
+    border-radius: 25px;
+    width: 50vh;
+    height: 70vh;
+    margin-top: 11vh;
+    padding: 5vh;
+    box-shadow: 1vh 1vh #6d35b1;
+  }
+  
+  .inputStyles {
+    padding: 10px;
+    gap: 10px;
+    width: 35vh;
+    border: 1px solid #bb86fc;
+    border-radius: 10px;
+  }
+  
+  .buttonStyles {
+    color: white;
+    background: #bb86fc;
+    text-align: center;
+    border-radius: 11px;
+    width: 15vh;
+    height: 5vh;
+  }
+  
+  .loginText {
+    color: black !important;
+    font-family: Fantasy;
+  }
+  
+  .fildsStyle {
+    margin-top: 4vh;
+    display: flex;
+    justify-content: center;
+  }
+  
