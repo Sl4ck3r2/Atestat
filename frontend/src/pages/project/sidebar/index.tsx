@@ -9,20 +9,20 @@ import { useNavigate } from 'react-router';
 
 import api from '../../../utils/api';
 import styles from './index.module.scss';
-const Test: React.FC = () => {
+const SideBar: React.FC = () => {
   const navigate = useNavigate();
   type AvailableProjectPaths = 'allusers' | 'promote' | 'settings';
 
   const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
     switch (key) {
       case 'allusers':
-        navigate('/allusers');
+        navigate('allusers');
         break;
       case 'promote':
-        navigate('/promote');
+        navigate('promote');
         break;
       case 'settings':
-        navigate('/settings');
+        navigate('settings');
         break;
       case 'logout':
         localStorage.removeItem('token');
@@ -81,4 +81,4 @@ const Test: React.FC = () => {
   );
 };
 
-export default Test;
+export default SideBar;

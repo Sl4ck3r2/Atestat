@@ -1,0 +1,11 @@
+.content {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    justify-content: center;
+}
+:global {
+.ant-layout-header {
+    background-color: #242625 !important;
+}
+}

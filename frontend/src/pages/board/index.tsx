@@ -1,8 +1,6 @@
 import { FC, ReactNode } from 'react';
 
 import SideBar from '../project/sidebar';
-import styles from './index.module.scss';
-
 interface EmptyLayoutProps {
   children?: ReactNode;
 }

@@ -23,7 +23,7 @@ const LoginPage: FC<{ requestedLocation?: string | null }> = () => {
       toast.success('Successfully');
       localStorage.setItem('token', response.data.token);
 
-      navigate('/mainboard');
+      navigate('/admin');
 
       setIsSuccessfuly(true);
     } catch (error) {

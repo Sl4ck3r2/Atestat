@@ -39,17 +39,18 @@ const Page = {
   Login: Loadable(lazy(() => import('./login'))),
   Register: Loadable(lazy(() => import('./register'))),
   Error404: Loadable(lazy(() => import('./404'))),
+  Admin: Loadable(lazy(() => import('./admin'))),
 };
 
 const routes: Array<RouteObject> = [
   {
-    path: '/mainboard',
+    path: '/admin',
     element: (
       <GuestGuard>
         <EmptyLayout />
       </GuestGuard>
     ),
-    children: [{ index: true, element: <Page.Board /> }],
+    children: [{ index: true, element: <Page.Admin /> }],
   },
   {
     path: '/',
