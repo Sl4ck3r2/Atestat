@@ -97,7 +97,7 @@ const data: DataType[] = [
   },
 ];
 
-const App: React.FC = () => {
+const UserTable: React.FC = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
@@ -220,4 +220,4 @@ const App: React.FC = () => {
   return <Table className={styles.tableStyle} size="large" columns={columns} dataSource={data} />;
 };
 
-export default App;
+export default UserTable;

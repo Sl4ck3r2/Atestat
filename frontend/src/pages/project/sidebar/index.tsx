@@ -43,7 +43,7 @@ const SideBar: React.FC = () => {
   return (
     <Layout>
       <Sider
-        style={{ minHeight: '100vh', background: '#242625' }}
+        style={{ minHeight: '86vh', background: '#242625' }}
         className={styles.MenuContainer}
         collapsible
         collapsed={collappsed}

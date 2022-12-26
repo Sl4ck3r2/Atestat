@@ -1,87 +1,82 @@
-import { LogoutOutlined, ProfileOutlined, ProjectOutlined, RocketOutlined, TableOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, LogoutOutlined, SettingFilled, TableOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { MenuProps } from 'antd/lib/menu';
-import { FC, ReactNode, useMemo } from 'react';
-import { matchPath, useLocation, useParams } from 'react-router';
+import { FC, ReactNode, useEffect, useState } from 'react';
+import { matchPath } from 'react-router';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import api from '../../utils/api';
 import styles from './index.module.scss';
-
 interface DefaultLayoutProps {
   children?: ReactNode;
 }
 
 type AvailableProjectPaths = 'daily' | 'retro' | 'planning';
 
-const isActive = (projectPath: AvailableProjectPaths, currentPath: string): boolean => {
-  return !!matchPath(`/project/:projectId/${projectPath}`, currentPath);
-};
-
 const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
-  const { projectId } = useParams();
-
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
     switch (key) {
-      case 'projects':
-        navigate('/project');
+      case 'allusers':
+        navigate('allusers');
+        break;
+      case 'promote':
+        navigate('promote');
+        break;
+      case 'settings':
+        navigate('settings');
         break;
       case 'logout':
-        console.log('logout action');
+        localStorage.removeItem('token');
+        navigate('/login');
         break;
-      default: {
-        const path = `/project/${projectId}/${key}`;
-        navigate(path);
-      }
     }
   };
 
-  const activeMenuItem = useMemo<Array<string>>(() => {
-    const path = location.pathname;
-
-    if (isActive('daily', path)) {
-      return ['daily'];
-    }
-    if (isActive('retro', path)) {
-      return ['retro'];
-    }
-    if (isActive('planning', path)) {
-      return ['planning'];
-    }
-
-    return [];
-  }, [location]);
+  const [collappsed, setCollapsed] = useState(false);
+  useEffect(() => {
+    const fetcher = async () => {
+      await api.user.userCurrentGet({
+        token: localStorage.getItem('token') || '',
+      });
+    };
+    fetcher();
+  }, []);
 
   return (
     <Layout>
       <Layout.Sider
+        style={{ minHeight: '100vh', background: '#242625' }}
         className={styles.MenuContainer}
-        breakpoint={'lg'}
-        collapsedWidth={0}
-        width={62}
-        style={{ minHeight: '100vh' }}
+        collapsible
+        collapsed={collappsed}
+        onCollapse={(value) => {
+          setCollapsed(value);
+        }}
+        collapsedWidth={64}
+        width={150}
       >
         <Menu
-          theme="dark"
+          style={{ background: '#242625' }}
+          className={styles.MenuContainerStyle}
           mode="inline"
-          selectedKeys={activeMenuItem}
+          theme="dark"
           items={[
-            { key: 'daily', icon: <ProfileOutlined /> },
-            { key: 'retro', icon: <TableOutlined /> },
-            { key: 'planning', icon: <RocketOutlined /> },
+            { label: 'All Users', key: 'allusers', icon: <TableOutlined /> },
+            { label: 'Promote', key: 'promote', icon: <ArrowUpOutlined /> },
           ]}
           onSelect={handleMenuClick}
-        />
-        <div className={styles.Spacer} />
+        ></Menu>
+        <div className={styles.Spacer}></div>
         <Menu
-          theme="dark"
-          mode="inline"
+          style={{ background: '#242625' }}
           selectedKeys={[]}
+          mode="inline"
+          theme="dark"
           items={[
-            { key: 'projects', icon: <ProjectOutlined /> },
-            { key: 'logout', icon: <LogoutOutlined /> },
+            { label: 'Logout', key: 'logout', icon: <LogoutOutlined /> },
+            { label: 'Settings', key: 'settings', icon: <SettingFilled /> },
           ]}
           onSelect={handleMenuClick}
         ></Menu>
@@ -91,6 +86,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
         <Layout.Content style={{ margin: '24px 16px' }}>{children || <Outlet />}</Layout.Content>
         <Layout.Footer />
       </Layout>
+      <Layout.Footer />
     </Layout>
   );
 };

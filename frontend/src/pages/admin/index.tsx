@@ -1,9 +1,8 @@
-import { Layout } from 'antd';
 import { FC, ReactNode } from 'react';
-const { Header, Content, Footer, Sider } = Layout;
-import AdminContent from '../project/_projectId/adminContent';
-import SideBar from '../project/sidebar';
-import styles from './index.module.scss';
+import { Outlet } from 'react-router';
+
+import UserTable from '../../components/users-table';
+import DefaultLayout from '../../layouts/Default';
 
 interface EmptyLayoutProps {
   children?: ReactNode;
@@ -11,17 +10,9 @@ interface EmptyLayoutProps {
 
 const EmptyLayout: FC<EmptyLayoutProps> = () => {
   return (
-    <Layout>
-      <Header></Header>
-      <Layout>
-        <Sider>
-          <SideBar />
-        </Sider>
-        <Content className={styles.content}>
-          <AdminContent />
-        </Content>
-      </Layout>
-    </Layout>
+    <DefaultLayout>
+      <UserTable />
+    </DefaultLayout>
   );
 };
 export default EmptyLayout;
