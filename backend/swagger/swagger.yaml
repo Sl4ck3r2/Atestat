@@ -7,14 +7,12 @@ components:
       - lastName
       - firstName
       - email
-      - password
       properties:
-        type: object
-        additionalProperties: true
         id:
-          type: string
+          type: integer
           minLength: 1
           description: The unique id of each user
+          readOnly: true
         firstName:
           type: string
           minLength: 1
@@ -27,30 +25,16 @@ components:
           type: string
           minLength: 1
           description: The email of each user
-        password:
-          type: string
-          minLength: 1
-          description: The password of each user
+          
         userRole: {"$ref":"#/components/schemas/RoleDto"}
       example:
-        id: '1'
+        id: 0
         firstName: string
         lastName: string
         email: string
-        password: 'string'
         userRole:
           id: 0
           name: ADMIN
-
-    LoginResponse:
-      type: object
-      properties:
-        token:
-          type: string
-          minLength:  1
-        message:
-          type: string
-          minLength:  1
 
     LoginRequest:
       type: object
@@ -65,8 +49,35 @@ components:
           type: string
           minLength: 1
       example:
-        email: rujamarcello88@outlook.com
-        password: mama11
+        email:  string
+        password: string
+
+    RegisterRequest:
+      type: object
+      required:
+      - firstName
+      - lastName
+      - email
+      - password
+      properties:
+        firstName:
+          type: string
+          minLength:  1
+        lastName:
+          type: string
+          minLength:  1
+        email:
+          type: string
+          minLength:  1
+        password:
+          type: string
+          minLength:  1
+      example:
+        firstName:  string
+        lastName: string
+        email:  string
+        password: string
+        
     RoleDto:
       required:
         - name
@@ -82,7 +93,39 @@ components:
             - ADMIN
             - SUPERADMIN
             - USER
-            
+    DataDto:
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - created_at
+      properties:
+        id:
+          type: integer/
+          minLength:  1
+        firstName:
+          type: string
+          minLength:  1
+        lastName:
+          type: string
+          minLength:  1
+        email:
+          type: string
+          minLength:  1
+        created_at:
+          type: string
+          minLength:  1
+        userRole: {"$ref":"#/components/schemas/RoleDto"}
+      example:
+        id: 0
+        firstName:  string
+        lastName: string
+        email:  string
+        created_at: string
+        userRole:
+          id: 0
+          role: SUPERADMIN
 tags:
   - name: auth-controller
   - name: user-controller
@@ -117,21 +160,21 @@ tags:
       content:
         application/json:
           schema:
-            "$ref": "#/components/schemas/UserDto"
+            "$ref": "#/components/schemas/RegisterRequest"
     responses:
       '200':
         description: The user was successfully created
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UserDto"
+              "$ref": "#/components/schemas/RegisterRequest"
       '500':
         description: Some server error
-"/get-data":
+"/users":
   get:
     summary: Return the list of all users
     tags:
-    - auth-controller
+    - user-controller
     responses:
       '200':
         description: The list of the users
@@ -140,26 +183,7 @@ tags:
             schema:
               type: array
               items:
-                "$ref": "#/components/schemas/UserDto"
-
-"/super-admin":
-  get:
-    summary:  Return the curent user data.
-    parameters:
-      - in: header
-        name: token
-        schema:
-          type: string
-        required: true
-    tags:
-    - user-controller
-    responses:
-      '200':
-        description:  OK
-        content:
-          aplication/json:
-            schema:
-              "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/DataDto"
 
 "/user/current":
   get:

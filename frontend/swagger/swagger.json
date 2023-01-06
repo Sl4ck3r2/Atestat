@@ -55,7 +55,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/RegisterRequest"
               }
             }
           }
@@ -66,7 +66,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDto"
+                  "$ref": "#/components/schemas/RegisterRequest"
                 }
               }
             }
@@ -77,11 +77,11 @@
         }
       }
     },
-    "/get-data": {
+    "/users": {
       "get": {
         "summary": "Return the list of all users",
         "tags": [
-          "auth-controller"
+          "user-controller"
         ],
         "responses": {
           "200": {
@@ -91,38 +91,8 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDto"
+                    "$ref": "#/components/schemas/DataDto"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/super-admin": {
-      "get": {
-        "summary": "Return the curent user data.",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "token",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "tags": [
-          "user-controller"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
                 }
               }
             }
@@ -168,14 +138,14 @@
         "required": [
           "lastName",
           "firstName",
-          "email",
-          "password"
+          "email"
         ],
         "properties": {
           "id": {
-            "type": "string",
+            "type": "integer",
             "minLength": 1,
-            "description": "The unique id of each user"
+            "description": "The unique id of each user",
+            "readOnly": true
           },
           "firstName": {
             "type": "string",
@@ -192,37 +162,18 @@
             "minLength": 1,
             "description": "The email of each user"
           },
-          "password": {
-            "type": "string",
-            "minLength": 1,
-            "description": "The password of each user"
-          },
           "userRole": {
             "$ref": "#/components/schemas/RoleDto"
           }
         },
         "example": {
-          "id": "1",
-          "firstName": "viorel",
-          "lastName": "ionut",
-          "email": "xyzv@gmail.com",
-          "password": "1234567",
+          "id": 0,
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
           "userRole": {
             "id": 0,
             "name": "ADMIN"
-          }
-        }
-      },
-      "LoginResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "minLength": 1
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
           }
         }
       },
@@ -243,8 +194,41 @@
           }
         },
         "example": {
-          "email": "rujamarcello88@outlook.com",
-          "password": "mama11"
+          "email": "string",
+          "password": "string"
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "example": {
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "password": "string"
         }
       },
       "RoleDto": {
@@ -265,6 +249,51 @@
               "SUPERADMIN",
               "USER"
             ]
+          }
+        }
+      },
+      "DataDto": {
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer/",
+            "minLength": 1
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1
+          },
+          "created_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "userRole": {
+            "$ref": "#/components/schemas/RoleDto"
+          }
+        },
+        "example": {
+          "id": 0,
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "created_at": "string",
+          "userRole": {
+            "id": 0,
+            "role": "SUPERADMIN"
           }
         }
       }
