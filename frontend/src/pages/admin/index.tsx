@@ -1,17 +1,22 @@
-import { FC, ReactNode } from 'react';
-import { Outlet } from 'react-router';
+import { FC, useEffect, useState } from 'react';
 
 import UserTable from '../../components/users-table';
+import { DataDto } from '../../generated/api';
 import DefaultLayout from '../../layouts/Default';
+import api from '../../utils/api';
 
-interface EmptyLayoutProps {
-  children?: ReactNode;
-}
-
-const EmptyLayout: FC<EmptyLayoutProps> = () => {
+const EmptyLayout: FC = () => {
+  const [data, setData] = useState<DataDto[]>([]);
+  useEffect(() => {
+    const fetcher = async () => {
+      const response = await api.user.usersGet();
+      setData(response.data);
+    };
+    fetcher();
+  }, []);
   return (
     <DefaultLayout>
-      <UserTable />
+      <UserTable data={data} />
     </DefaultLayout>
   );
 };

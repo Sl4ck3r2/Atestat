@@ -29,10 +29,10 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 export interface DataDto {
     /**
      * 
-     * @type {ModelInteger}
+     * @type {number}
      * @memberof DataDto
      */
-    'id': ModelInteger;
+    'id': number;
     /**
      * 
      * @type {string}

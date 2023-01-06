@@ -8,8 +8,8 @@ import AsyncStateRender from '../../components/async-state-render';
 import api from '../../utils/api';
 
 const ProjectListPage: FC = () => {
-  const state = useAsync(() => api.auth.getDataGet());
-  console.log(state);
+  //const state = useAsync(() => api.auth.getDataGet());
+  // console.log(state);
   const navigate = useNavigate();
 
   const handleOpenProjectClick = (id?: number) => {
@@ -28,7 +28,7 @@ const ProjectListPage: FC = () => {
       <Typography.Title>Select a project</Typography.Title>
       <Row>
         <Col span={24}>
-          <AsyncStateRender state={state} onSuccess={(response) => <Row gutter={[15, 15]}></Row>} />
+          {/* <AsyncStateRender state={state} onSuccess={(response) => <Row gutter={[15, 15]}></Row>} /> */}
         </Col>
       </Row>
     </>

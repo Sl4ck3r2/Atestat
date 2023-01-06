@@ -102,7 +102,7 @@ components:
         - created_at
       properties:
         id:
-          type: integer/
+          type: integer
           minLength:  1
         firstName:
           type: string
