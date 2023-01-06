@@ -26,6 +26,7 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
+app.use("/api", require("./api/auth"));
 app.use("/api", require("./api/user"));
 app.use(
   "/api/swagger",

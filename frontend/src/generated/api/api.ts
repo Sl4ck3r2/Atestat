@@ -24,6 +24,49 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface DataDto
+ */
+export interface DataDto {
+    /**
+     * 
+     * @type {ModelInteger}
+     * @memberof DataDto
+     */
+    'id': ModelInteger;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataDto
+     */
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataDto
+     */
+    'lastName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataDto
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataDto
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {RoleDto}
+     * @memberof DataDto
+     */
+    'userRole'?: RoleDto;
+}
+/**
+ * 
+ * @export
  * @interface LoginRequest
  */
 export interface LoginRequest {
@@ -43,21 +86,33 @@ export interface LoginRequest {
 /**
  * 
  * @export
- * @interface LoginResponse
+ * @interface RegisterRequest
  */
-export interface LoginResponse {
+export interface RegisterRequest {
     /**
      * 
      * @type {string}
-     * @memberof LoginResponse
+     * @memberof RegisterRequest
      */
-    'token'?: string;
+    'firstName': string;
     /**
      * 
      * @type {string}
-     * @memberof LoginResponse
+     * @memberof RegisterRequest
      */
-    'message'?: string;
+    'lastName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterRequest
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterRequest
+     */
+    'password': string;
 }
 /**
  * 
@@ -95,10 +150,10 @@ export type RoleDtoNameEnum = typeof RoleDtoNameEnum[keyof typeof RoleDtoNameEnu
 export interface UserDto {
     /**
      * The unique id of each user
-     * @type {string}
+     * @type {number}
      * @memberof UserDto
      */
-    'id'?: string;
+    'id'?: number;
     /**
      * The first name of each user
      * @type {string}
@@ -118,12 +173,6 @@ export interface UserDto {
      */
     'email': string;
     /**
-     * The password of each user
-     * @type {string}
-     * @memberof UserDto
-     */
-    'password': string;
-    /**
      * 
      * @type {RoleDto}
      * @memberof UserDto
@@ -137,36 +186,6 @@ export interface UserDto {
  */
 export const AuthControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Return the list of all users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDataGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/get-data`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Login to your account
@@ -206,13 +225,13 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Create a new account
-         * @param {UserDto} userDto 
+         * @param {RegisterRequest} registerRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPost: async (userDto: UserDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userDto' is not null or undefined
-            assertParamExists('registerPost', 'userDto', userDto)
+        registerPost: async (registerRequest: RegisterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerRequest' is not null or undefined
+            assertParamExists('registerPost', 'registerRequest', registerRequest)
             const localVarPath = `/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -232,7 +251,7 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(registerRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -251,16 +270,6 @@ export const AuthControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Return the list of all users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDataGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Login to your account
          * @param {LoginRequest} loginRequest 
          * @param {*} [options] Override http request option.
@@ -273,12 +282,12 @@ export const AuthControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a new account
-         * @param {UserDto} userDto 
+         * @param {RegisterRequest} registerRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerPost(userDto: UserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerPost(userDto, options);
+        async registerPost(registerRequest: RegisterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerPost(registerRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -293,15 +302,6 @@ export const AuthControllerApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @summary Return the list of all users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDataGet(options?: any): AxiosPromise<Array<UserDto>> {
-            return localVarFp.getDataGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Login to your account
          * @param {LoginRequest} loginRequest 
          * @param {*} [options] Override http request option.
@@ -313,12 +313,12 @@ export const AuthControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Create a new account
-         * @param {UserDto} userDto 
+         * @param {RegisterRequest} registerRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPost(userDto: UserDto, options?: any): AxiosPromise<UserDto> {
-            return localVarFp.registerPost(userDto, options).then((request) => request(axios, basePath));
+        registerPost(registerRequest: RegisterRequest, options?: any): AxiosPromise<RegisterRequest> {
+            return localVarFp.registerPost(registerRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -345,10 +345,10 @@ export interface AuthControllerApiLoginPostRequest {
 export interface AuthControllerApiRegisterPostRequest {
     /**
      * 
-     * @type {UserDto}
+     * @type {RegisterRequest}
      * @memberof AuthControllerApiRegisterPost
      */
-    readonly userDto: UserDto
+    readonly registerRequest: RegisterRequest
 }
 
 /**
@@ -358,17 +358,6 @@ export interface AuthControllerApiRegisterPostRequest {
  * @extends {BaseAPI}
  */
 export class AuthControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary Return the list of all users
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthControllerApi
-     */
-    public getDataGet(options?: AxiosRequestConfig) {
-        return AuthControllerApiFp(this.configuration).getDataGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Login to your account
@@ -390,7 +379,7 @@ export class AuthControllerApi extends BaseAPI {
      * @memberof AuthControllerApi
      */
     public registerPost(requestParameters: AuthControllerApiRegisterPostRequest, options?: AxiosRequestConfig) {
-        return AuthControllerApiFp(this.configuration).registerPost(requestParameters.userDto, options).then((request) => request(this.axios, this.basePath));
+        return AuthControllerApiFp(this.configuration).registerPost(requestParameters.registerRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -401,43 +390,6 @@ export class AuthControllerApi extends BaseAPI {
  */
 export const UserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Return the curent user data.
-         * @param {string} token 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        superAdminGet: async (token: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'token' is not null or undefined
-            assertParamExists('superAdminGet', 'token', token)
-            const localVarPath = `/super-admin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (token !== undefined && token !== null) {
-                localVarHeaderParameter['token'] = String(token);
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Return the curent user data.
@@ -475,6 +427,36 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Return the list of all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -492,19 +474,18 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async superAdminGet(token: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.superAdminGet(token, options);
+        async userCurrentGet(token: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userCurrentGet(token, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Return the curent user data.
-         * @param {string} token 
+         * @summary Return the list of all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userCurrentGet(token: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userCurrentGet(token, options);
+        async usersGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -524,35 +505,20 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        superAdminGet(token: string, options?: any): AxiosPromise<UserDto> {
-            return localVarFp.superAdminGet(token, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Return the curent user data.
-         * @param {string} token 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         userCurrentGet(token: string, options?: any): AxiosPromise<UserDto> {
             return localVarFp.userCurrentGet(token, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Return the list of all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet(options?: any): AxiosPromise<Array<DataDto>> {
+            return localVarFp.usersGet(options).then((request) => request(axios, basePath));
+        },
     };
 };
-
-/**
- * Request parameters for superAdminGet operation in UserControllerApi.
- * @export
- * @interface UserControllerApiSuperAdminGetRequest
- */
-export interface UserControllerApiSuperAdminGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserControllerApiSuperAdminGet
-     */
-    readonly token: string
-}
 
 /**
  * Request parameters for userCurrentGet operation in UserControllerApi.
@@ -578,18 +544,6 @@ export class UserControllerApi extends BaseAPI {
     /**
      * 
      * @summary Return the curent user data.
-     * @param {UserControllerApiSuperAdminGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserControllerApi
-     */
-    public superAdminGet(requestParameters: UserControllerApiSuperAdminGetRequest, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).superAdminGet(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Return the curent user data.
      * @param {UserControllerApiUserCurrentGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -597,6 +551,17 @@ export class UserControllerApi extends BaseAPI {
      */
     public userCurrentGet(requestParameters: UserControllerApiUserCurrentGetRequest, options?: AxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).userCurrentGet(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Return the list of all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public usersGet(options?: AxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).usersGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
