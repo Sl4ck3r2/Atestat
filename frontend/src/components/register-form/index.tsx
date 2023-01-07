@@ -30,6 +30,10 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
   const [form] = Form.useForm();
   const [usedEmail, setUsedEmail] = useState('');
 
+  const resetAllFields = () => {
+    form.resetFields();
+  };
+
   useEffect(() => {
     if (isSuccessfully) {
       setUsedEmail(form.getFieldValue(['email']));
@@ -37,7 +41,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
     } else if (isSuccessfully == false) {
       form.resetFields();
     }
-  }, [isSuccessfully, form, setUsedEmail]);
+  }, [isSuccessfully, form, setUsedEmail, resetState]);
 
   return (
     <BackgroundLogin>

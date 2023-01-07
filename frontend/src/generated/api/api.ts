@@ -541,6 +541,9 @@ export interface UserControllerApiUserCurrentGetRequest {
  * @extends {BaseAPI}
  */
 export class UserControllerApi extends BaseAPI {
+    getCurrentUser(arg0: { token: string; }) {
+        throw new Error('Method not implemented.');
+    }
     /**
      * 
      * @summary Return the curent user data.

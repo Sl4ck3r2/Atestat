@@ -1,25 +1,23 @@
 import { ArrowUpOutlined, LogoutOutlined, SettingFilled, TableOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { MenuProps } from 'antd/lib/menu';
-import { FC, ReactNode, useEffect, useState } from 'react';
-import { matchPath } from 'react-router';
+import { FC, ReactNode, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import api from '../../utils/api';
+import { useUserProvider } from '../../context/User';
 import styles from './index.module.scss';
 interface DefaultLayoutProps {
   children?: ReactNode;
 }
 
-type AvailableProjectPaths = 'daily' | 'retro' | 'planning';
-
 const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
+  const { signOut } = useUserProvider();
 
   const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
     switch (key) {
-      case 'allusers':
-        navigate('allusers');
+      case 'all-users':
+        navigate('all-users');
         break;
       case 'promote':
         navigate('promote');
@@ -28,21 +26,13 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
         navigate('settings');
         break;
       case 'logout':
-        localStorage.removeItem('token');
-        navigate('/login');
+        signOut();
+        navigate('/');
         break;
     }
   };
 
   const [collappsed, setCollapsed] = useState(false);
-  useEffect(() => {
-    const fetcher = async () => {
-      await api.user.userCurrentGet({
-        token: localStorage.getItem('token') || '',
-      });
-    };
-    fetcher();
-  }, []);
 
   return (
     <Layout>
@@ -63,7 +53,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
           mode="inline"
           theme="dark"
           items={[
-            { label: 'All Users', key: 'allusers', icon: <TableOutlined /> },
+            { label: 'All Users', key: 'all-users', icon: <TableOutlined /> },
             { label: 'Promote', key: 'promote', icon: <ArrowUpOutlined /> },
           ]}
           onSelect={handleMenuClick}

@@ -1,42 +1,48 @@
-import { FC, memo, ReactNode, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Spin } from 'antd';
+import { FC, memo, ReactNode, useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
+import { useUserProvider } from '../../context/User';
 import EmptyLayout from '../../layouts/Empty';
 import LoginPage from '../../pages/login';
 
 interface AuthenticatedGuardProps {
   children: ReactNode;
+  inProjectGuard?: boolean;
 }
 
 const AuthenticatedGuard: FC<AuthenticatedGuardProps> = ({ children }) => {
-  // Instead of `true` that value could be replaced for some hook like
-  // `useIsAuthenticated` from `@azure/msal-react`
-  const isAuthenticated = true;
+  const { user, userLoading } = useUserProvider();
 
-  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(Boolean(user));
   const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
 
-  if (!isAuthenticated) {
-    if (location.pathname !== requestedLocation) {
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsAuthenticated(Boolean(user));
+  }, [user]);
+
+  const renderComponent = useCallback(() => {
+    const isDifferentLocation = location.pathname !== requestedLocation;
+    if (isDifferentLocation) {
       setRequestedLocation(location.pathname);
     }
 
-    return (
-      <EmptyLayout>
-        <LoginPage requestedLocation={requestedLocation} />
-      </EmptyLayout>
-    );
-  }
+    if (!isAuthenticated) {
+      return <EmptyLayout>{!userLoading ? <LoginPage requestedLocation={requestedLocation} /> : <Spin />}</EmptyLayout>;
+    }
 
-  // This is done so that in case the route changes by any chance through other
-  // means between the moment of request and the render we navigate to the initially
-  // requested route.
-  if (requestedLocation && location.pathname !== requestedLocation) {
-    setRequestedLocation(null);
-    return <Navigate to={requestedLocation} />;
-  }
+    /*
+     * This is done so that in case the route changes by any chance through other
+     * means between the moment of request and the render we navigate to the initially
+     * requested route.
+     */
 
-  return <>{children}</>;
+    return <>{children}</>;
+  }, [children, isAuthenticated, location.pathname, requestedLocation, userLoading]);
+
+  return renderComponent();
 };
 
 export default memo(AuthenticatedGuard);

@@ -1,5 +1,5 @@
 import { ArrowUpOutlined, LogoutOutlined, SettingFilled, TableOutlined } from '@ant-design/icons';
-import { Menu, Table } from 'antd';
+import { Menu } from 'antd';
 import { MenuProps } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
@@ -11,11 +11,11 @@ import api from '../../../utils/api';
 import styles from './index.module.scss';
 const SideBar: React.FC = () => {
   const navigate = useNavigate();
-  type AvailableProjectPaths = 'allusers' | 'promote' | 'settings';
+  type AvailableProjectPaths = 'all-users' | 'promote' | 'settings';
 
   const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
     switch (key) {
-      case 'allusers':
+      case 'all-users':
         navigate('allusers');
         break;
       case 'promote':
@@ -59,7 +59,7 @@ const SideBar: React.FC = () => {
           mode="inline"
           theme="dark"
           items={[
-            { label: 'All Users', key: 'allusers', icon: <TableOutlined /> },
+            { label: 'All Users', key: 'all-users', icon: <TableOutlined /> },
             { label: 'Promote', key: 'promote', icon: <ArrowUpOutlined /> },
           ]}
           onSelect={handleMenuClick}
