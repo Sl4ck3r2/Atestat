@@ -24,7 +24,7 @@ router.get("/user/current", verifyToken, async (req, res) => {
         name: information.rows[0].role,
       },
     };
-    console.log(response);
+
     return res.status(200).send(response);
   } catch (error) {
     console.log(error);
@@ -34,7 +34,8 @@ router.get("/user/current", verifyToken, async (req, res) => {
 router.get("/users", async (req, res) => {
   try {
     const response =
-      await pool.query(`SELECT  users.first_name, users.last_name, users.email, users.created_at, roles.id, roles.role ,users_roles.user_id
+      await pool.query(`SELECT  users.first_name, users.last_name, users.email, users.created_at, roles.id,
+    roles.role ,users_roles.user_id
     FROM users
     INNER JOIN users_roles
     ON users.id = users_roles.user_id

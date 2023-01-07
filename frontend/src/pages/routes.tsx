@@ -2,6 +2,7 @@ import { FC, lazy, Suspense, useEffect } from 'react';
 import { Navigate, RouteObject, useLocation, useRoutes } from 'react-router';
 
 import FullscreenLoader from '../components/fullscreen-loader';
+import { Role } from '../context/Role';
 import AuthenticatedGuard from '../guards/authenticated';
 import GuestGuard from '../guards/guest';
 import DefaultLayout from '../layouts/Default';
@@ -40,22 +41,61 @@ const Page = {
   Register: Loadable(lazy(() => import('./register'))),
   Error404: Loadable(lazy(() => import('./404'))),
   Admin: Loadable(lazy(() => import('./admin'))),
+  AllUsers: Loadable(lazy(() => import('./admin/all-users/all-users'))),
 };
 
 const routes: Array<RouteObject> = [
   {
-    path: '/admin',
+    path: '/',
     element: (
-      <GuestGuard>
+      <AuthenticatedGuard>
         <EmptyLayout />
-      </GuestGuard>
+      </AuthenticatedGuard>
     ),
-    children: [{ index: true, element: <Page.Admin /> }],
+    children: [{ path: '/', element: <Navigate to="/admin" replace /> }],
   },
   {
-    path: '/',
-    element: <EmptyLayout />,
-    children: [{ path: '/', element: <Navigate to="/project" replace /> }],
+    path: '/admin',
+    element: (
+      <AuthenticatedGuard inProjectGuard>
+        <EmptyLayout />
+      </AuthenticatedGuard>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <>
+            <Role renderIf={({ SUPERADMIN }) => SUPERADMIN}>
+              <Page.Admin />
+            </Role>
+            <Role renderIf={({ USER, ADMIN }) => USER || ADMIN}>
+              <Page.Admin />
+            </Role>
+          </>
+        ),
+      },
+      {
+        path: 'all-users',
+        children: [
+          {
+            index: true,
+            element: (
+              <>
+                <Role renderIf={({ SUPERADMIN }) => SUPERADMIN}>
+                  <Page.AllUsers />
+                </Role>
+                <Role renderIf={({ USER, ADMIN }) => USER || ADMIN}>
+                  <EmptyLayout>
+                    <Page.Error404 />
+                  </EmptyLayout>
+                </Role>
+              </>
+            ),
+          },
+        ],
+      },
+    ],
   },
   {
     path: '/project',

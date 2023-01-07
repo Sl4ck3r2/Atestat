@@ -38,7 +38,6 @@ const LoginForm: FC<LoginFormProps> = ({ resetState, isSuccessfully, loading, on
 
       form.validateFields(['submit']);
     } else if (isSuccessfully == true) {
-      toast.success('Successfully');
       form.resetFields();
     }
   }, [isSuccessfully, form, setUsedValues, onSubmit]);

@@ -54,6 +54,7 @@ const UserTable: React.FC<TableProps> = (data) => {
   return (
     <>
       <Table
+        pagination={{ defaultCurrent: 1, total: 200 }}
         className={styles.tableStyle}
         dataSource={data.data}
         columns={columns}
