@@ -34,23 +34,23 @@ router.get("/user/current", verifyToken, async (req, res) => {
 router.get("/users", async (req, res) => {
   try {
     const response =
-      await pool.query(`SELECT users.id, users.first_name, users.last_name, users.email, users.created_at, roles.id, roles.role 
+      await pool.query(`SELECT  users.first_name, users.last_name, users.email, users.created_at, roles.id, roles.role ,users_roles.user_id
     FROM users
     INNER JOIN users_roles
     ON users.id = users_roles.user_id
     
     INNER JOIN roles
     ON users_roles.role_id = roles.id`);
-
+    console.log(response.rows);
     const data = response.rows.map((el) => {
       return {
-        id: el.id,
+        id: el.user_id,
         firstName: el.first_name,
         lastName: el.last_name,
         email: el.email,
         created_at: el.created_at,
         userRole: {
-          id: el.role_id,
+          id: el.id,
           name: el.role,
         },
       };

@@ -15,7 +15,7 @@ const RegisterPage: FC = () => {
     try {
       setLoading(true);
       await api.auth.registerPost({
-        userDto: {
+        registerRequest: {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
