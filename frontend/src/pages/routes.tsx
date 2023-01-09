@@ -19,29 +19,15 @@ const Loadable = (Component: FC) => (props: any) => {
 
 const Page = {
   Project: {
-    List: Loadable(lazy(() => import('./project'))),
-    Daily: {
-      List: Loadable(lazy(() => import('./project/_projectId/daily'))),
-      Id: Loadable(lazy(() => import('./project/_projectId/daily/_dailyId'))),
-      Create: Loadable(lazy(() => import('./project/_projectId/daily/create'))),
-    },
-    Retro: {
-      List: Loadable(lazy(() => import('./project/_projectId/retro'))),
-      Id: Loadable(lazy(() => import('./project/_projectId/retro/_retroId'))),
-      Create: Loadable(lazy(() => import('./project/_projectId/retro/create'))),
-    },
-    Planning: {
-      List: Loadable(lazy(() => import('./project/_projectId/planning'))),
-      Id: Loadable(lazy(() => import('./project/_projectId/planning/_planningId'))),
-      Create: Loadable(lazy(() => import('./project/_projectId/planning/create'))),
+    Dashboard: {
+      AllUsers: Loadable(lazy(() => import('./dashboard/all-users/all-users'))),
+      Notification: Loadable(lazy(() => import('./dashboard/notification'))),
     },
   },
-  Board: Loadable(lazy(() => import('./board'))),
   Login: Loadable(lazy(() => import('./login'))),
   Register: Loadable(lazy(() => import('./register'))),
   Error404: Loadable(lazy(() => import('./404'))),
-  Admin: Loadable(lazy(() => import('./admin'))),
-  AllUsers: Loadable(lazy(() => import('./admin/all-users/all-users'))),
+  Dashboard: Loadable(lazy(() => import('./dashboard'))),
 };
 
 const routes: Array<RouteObject> = [
@@ -52,13 +38,13 @@ const routes: Array<RouteObject> = [
         <EmptyLayout />
       </AuthenticatedGuard>
     ),
-    children: [{ path: '/', element: <Navigate to="/admin" replace /> }],
+    children: [{ path: '/', element: <Navigate to="/dashboard" replace /> }],
   },
   {
-    path: '/admin',
+    path: '/dashboard',
     element: (
       <AuthenticatedGuard inProjectGuard>
-        <EmptyLayout />
+        <DefaultLayout />
       </AuthenticatedGuard>
     ),
     children: [
@@ -67,10 +53,10 @@ const routes: Array<RouteObject> = [
         element: (
           <>
             <Role renderIf={({ SUPERADMIN }) => SUPERADMIN}>
-              <Page.Admin />
+              <Page.Dashboard />
             </Role>
             <Role renderIf={({ USER, ADMIN }) => USER || ADMIN}>
-              <Page.Admin />
+              <Page.Dashboard />
             </Role>
           </>
         ),
@@ -83,7 +69,27 @@ const routes: Array<RouteObject> = [
             element: (
               <>
                 <Role renderIf={({ SUPERADMIN }) => SUPERADMIN}>
-                  <Page.AllUsers />
+                  <Page.Project.Dashboard.AllUsers />
+                </Role>
+                <Role renderIf={({ USER, ADMIN }) => USER || ADMIN}>
+                  <EmptyLayout>
+                    <Page.Error404 />
+                  </EmptyLayout>
+                </Role>
+              </>
+            ),
+          },
+        ],
+      },
+      {
+        path: 'notification',
+        children: [
+          {
+            index: true,
+            element: (
+              <>
+                <Role renderIf={({ SUPERADMIN }) => SUPERADMIN}>
+                  <Page.Project.Dashboard.Notification />
                 </Role>
                 <Role renderIf={({ USER, ADMIN }) => USER || ADMIN}>
                   <EmptyLayout>
@@ -97,50 +103,7 @@ const routes: Array<RouteObject> = [
       },
     ],
   },
-  {
-    path: '/project',
-    element: (
-      <AuthenticatedGuard>
-        <EmptyLayout />
-      </AuthenticatedGuard>
-    ),
-    children: [{ index: true, element: <Page.Project.List /> }],
-  },
-  {
-    path: '/project/:projectId',
-    element: (
-      <AuthenticatedGuard>
-        <DefaultLayout />
-      </AuthenticatedGuard>
-    ),
-    children: [
-      { index: true, element: <Navigate to="./daily" replace /> },
-      {
-        path: 'daily',
-        children: [
-          { index: true, element: <Page.Project.Daily.List /> },
-          { path: ':dailyId', element: <Page.Project.Daily.Id /> },
-          { path: 'create', element: <Page.Project.Daily.Create /> },
-        ],
-      },
-      {
-        path: 'retro',
-        children: [
-          { index: true, element: <Page.Project.Retro.List /> },
-          { path: ':retroId', element: <Page.Project.Retro.Id /> },
-          { path: 'create', element: <Page.Project.Retro.Create /> },
-        ],
-      },
-      {
-        path: 'planning',
-        children: [
-          { index: true, element: <Page.Project.Planning.List /> },
-          { path: ':planningId', element: <Page.Project.Planning.Id /> },
-          { path: 'create', element: <Page.Project.Planning.Create /> },
-        ],
-      },
-    ],
-  },
+
   {
     path: '/register',
     element: (

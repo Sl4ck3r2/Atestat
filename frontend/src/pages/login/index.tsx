@@ -24,7 +24,7 @@ const LoginPage: FC<{ requestedLocation?: string | null }> = ({ requestedLocatio
       });
       toast.success('Successfully');
       setToken(response.data);
-      navigate(requestedLocation || '/admin');
+      navigate(requestedLocation || '/dashboard');
       setIsSuccessfuly(true);
     } catch (error) {
       setIsSuccessfuly(false);
