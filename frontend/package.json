@@ -34,7 +34,7 @@
   "scripts": {
     "lint": "eslint **/*.{ts,tsx}",
     "lint:fix": "eslint --fix **/*.{ts,tsx}",
-    "start": "set PORT=3002  && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

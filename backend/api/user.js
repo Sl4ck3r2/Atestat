@@ -42,7 +42,6 @@ router.get("/users", async (req, res) => {
     
     INNER JOIN roles
     ON users_roles.role_id = roles.id`);
-    console.log(response.rows);
     const data = response.rows.map((el) => {
       return {
         id: el.user_id,

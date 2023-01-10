@@ -1,4 +1,4 @@
-import { ArrowUpOutlined, LogoutOutlined, SettingFilled, TableOutlined } from '@ant-design/icons';
+import { LogoutOutlined, NotificationOutlined, SettingFilled, TableOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { MenuProps } from 'antd/lib/menu';
 import { FC, ReactNode, useState } from 'react';
@@ -19,15 +19,15 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
       case 'all-users':
         navigate('all-users');
         break;
-      case 'promote':
-        navigate('promote');
+      case 'notification':
+        navigate('notification');
         break;
       case 'settings':
         navigate('settings');
         break;
       case 'logout':
         signOut();
-        navigate('/');
+        navigate('/login');
         break;
     }
   };
@@ -54,7 +54,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
           theme="dark"
           items={[
             { label: 'All Users', key: 'all-users', icon: <TableOutlined /> },
-            { label: 'Promote', key: 'promote', icon: <ArrowUpOutlined /> },
+            { label: 'Notification', key: 'notification', icon: <NotificationOutlined /> },
           ]}
           onSelect={handleMenuClick}
         ></Menu>

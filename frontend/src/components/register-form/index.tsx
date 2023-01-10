@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import BackgroundLogin from '../background-login';
 import styles from './index.module.scss';
@@ -29,17 +29,15 @@ interface RegisterFormProps {
 const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loading, onSubmit }) => {
   const [form] = Form.useForm();
   const [usedEmail, setUsedEmail] = useState('');
-
-  const resetAllFields = () => {
-    form.resetFields();
-  };
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (isSuccessfully) {
       setUsedEmail(form.getFieldValue(['email']));
       form.validateFields(['email']);
+      console.log(1);
     } else if (isSuccessfully == false) {
       form.resetFields();
+      navigate('/login');
     }
   }, [isSuccessfully, form, setUsedEmail, resetState]);
 

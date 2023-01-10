@@ -14,11 +14,7 @@ const EmptyLayout: FC = () => {
     };
     fetcher();
   }, []);
-  return (
-    <DefaultLayout>
-      <UserTable data={data} />
-    </DefaultLayout>
-  );
+  return <UserTable data={data} />;
 };
 
 export default EmptyLayout;
