@@ -66,7 +66,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         const currentUser = await api.user.userCurrentGet({
           token: localStorage.getItem('token') || '',
         });
-        console.log(currentUser);
         return saveUser(currentUser.data);
       } catch (e) {
         return null;
