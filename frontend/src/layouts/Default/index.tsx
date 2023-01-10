@@ -92,7 +92,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
             theme="dark"
             items={[
               {
-                label: 'Profile',
+                label: `${user?.firstName}`, //grid si pentru email unul sub altul
                 key: 'profile',
                 icon: <Avatar shape="square" size={48} icon={<UserOutlined />}></Avatar>,
               },
