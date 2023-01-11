@@ -1,9 +1,12 @@
-import { LogoutOutlined, NotificationOutlined, SettingFilled, TableOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
-import { MenuProps } from 'antd/lib/menu';
+import { Layout } from 'antd';
 import { FC, ReactNode, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
+import AdminDashboard from '../../components/dashboard/admin-dashboard';
+import BottomDashboard from '../../components/dashboard/bottom-dashboard';
+import SuperAdminDashboard from '../../components/dashboard/superadmin-dashboard';
+import UserDashboard from '../../components/dashboard/user-dashboard';
+import { Role } from '../../context/Role';
 import { useUserProvider } from '../../context/User';
 import styles from './index.module.scss';
 interface DefaultLayoutProps {
@@ -11,27 +14,7 @@ interface DefaultLayoutProps {
 }
 
 const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
-  const navigate = useNavigate();
-  const { signOut } = useUserProvider();
-
-  const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
-    switch (key) {
-      case 'all-users':
-        navigate('all-users');
-        break;
-      case 'notification':
-        navigate('notification');
-        break;
-      case 'settings':
-        navigate('settings');
-        break;
-      case 'logout':
-        signOut();
-        navigate('/login');
-        break;
-    }
-  };
-
+  const { user } = useUserProvider();
   const [collappsed, setCollapsed] = useState(false);
 
   return (
@@ -47,29 +30,17 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
         collapsedWidth={64}
         width={150}
       >
-        <Menu
-          style={{ background: '#242625' }}
-          className={styles.MenuContainerStyle}
-          mode="inline"
-          theme="dark"
-          items={[
-            { label: 'All Users', key: 'all-users', icon: <TableOutlined /> },
-            { label: 'Notification', key: 'notification', icon: <NotificationOutlined /> },
-          ]}
-          onSelect={handleMenuClick}
-        ></Menu>
+        <Role renderIf={({ SUPERADMIN }) => SUPERADMIN}>
+          <SuperAdminDashboard user={user} />
+        </Role>
+        <Role renderIf={({ ADMIN }) => ADMIN}>
+          <AdminDashboard user={user} />
+        </Role>
+        <Role renderIf={({ USER }) => USER}>
+          <UserDashboard user={user} />
+        </Role>
         <div className={styles.Spacer}></div>
-        <Menu
-          style={{ background: '#242625' }}
-          selectedKeys={[]}
-          mode="inline"
-          theme="dark"
-          items={[
-            { label: 'Logout', key: 'logout', icon: <LogoutOutlined /> },
-            { label: 'Settings', key: 'settings', icon: <SettingFilled /> },
-          ]}
-          onSelect={handleMenuClick}
-        ></Menu>
+        <BottomDashboard />
       </Layout.Sider>
       <Layout>
         <Layout.Header />

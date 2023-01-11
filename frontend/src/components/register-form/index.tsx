@@ -61,7 +61,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
             <Form.Item
               hasFeedback
               name="firstName"
-              rules={[{ required: true, message: 'Please input your first name!' }]}
+              rules={[{ required: true, message: 'Please input your first name!', whitespace: true }]}
             >
               <Input className={styles.inputStyles} placeholder="First Name" />
             </Form.Item>
@@ -69,7 +69,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
             <Form.Item
               hasFeedback
               name="lastName"
-              rules={[{ required: true, message: 'Please input your last name!' }]}
+              rules={[{ required: true, message: 'Please input your last name!', whitespace: true }]}
             >
               <Input className={styles.inputStyles} placeholder="Last Name" />
             </Form.Item>
