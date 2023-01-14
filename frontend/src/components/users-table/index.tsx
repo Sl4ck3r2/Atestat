@@ -1,9 +1,9 @@
 import Table from 'antd/es/table';
-import Modal from 'antd/lib/modal/Modal';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useState } from 'react';
 
 import { DataDto } from '../../generated/api';
+import UserDataPopup from '../user-data-popup';
 import styles from './index.module.scss';
 interface TableProps {
   data: DataDto[];
@@ -12,17 +12,6 @@ interface TableProps {
 const UserTable: React.FC<TableProps> = (data) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
   const columns: ColumnsType<DataDto> = [
     {
       title: 'First Name',
@@ -51,10 +40,22 @@ const UserTable: React.FC<TableProps> = (data) => {
       sortDirections: ['descend', 'ascend'],
     },
   ];
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <Table
-        pagination={{ defaultCurrent: 1, total: 200 }}
+        pagination={{ defaultCurrent: 1, total: 20 }}
         className={styles.tableStyle}
         dataSource={data.data}
         columns={columns}
@@ -67,11 +68,7 @@ const UserTable: React.FC<TableProps> = (data) => {
           };
         }}
       ></Table>
-      <Modal title="Name+Profile Picture" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
+      <UserDataPopup open={isModalOpen} onOk={() => handleOk()} onCancel={() => handleCancel()} />
     </>
   );
 };
