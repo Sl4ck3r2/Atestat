@@ -80,6 +80,16 @@
     "/users": {
       "get": {
         "summary": "Return the list of all users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "description": "The current page number"
+            }
+          }
+        ],
         "tags": [
           "user-controller"
         ],
@@ -89,10 +99,7 @@
             "content": {
               "aplication/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DataDto"
-                  }
+                  "$ref": "#/components/schemas/TableDataDto"
                 }
               }
             }
@@ -252,6 +259,37 @@
           }
         }
       },
+      "TableDataDto": {
+        "required": [
+          "page"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "minLength": 1
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataDto"
+            }
+          }
+        },
+        "example": {
+          "page": 1,
+          "data": {
+            "id": 0,
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "created_at": "string",
+            "userRole": {
+              "id": 0,
+              "role": "SUPERADMIN"
+            }
+          }
+        }
+      },
       "DataDto": {
         "required": [
           "id",
@@ -262,7 +300,7 @@
         ],
         "properties": {
           "id": {
-            "type": "integer/",
+            "type": "integer",
             "minLength": 1
           },
           "firstName": {

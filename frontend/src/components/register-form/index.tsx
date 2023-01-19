@@ -34,7 +34,6 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
     if (isSuccessfully) {
       setUsedEmail(form.getFieldValue(['email']));
       form.validateFields(['email']);
-      console.log(1);
     } else if (isSuccessfully == false) {
       form.resetFields();
       navigate('/login');
