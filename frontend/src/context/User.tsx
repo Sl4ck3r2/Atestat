@@ -36,7 +36,6 @@ export const UserContext = createContext<UserContextInterface>(defaultValues);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, saveUser] = useState<UserDto | undefined>();
   const [userLoading, setUserLoading] = useState(Boolean(localStorage.getItem('token')));
-  console.log(user);
 
   const setToken = async (data: Token) => {
     const accessToken = data.token ? data.token : '';

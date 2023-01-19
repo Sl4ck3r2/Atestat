@@ -32,6 +32,10 @@ router.get("/user/current", verifyToken, async (req, res) => {
 });
 
 router.get("/users", async (req, res) => {
+  const page = req.query.page;
+  const startIndex = (page - 1) * 10;
+  const endIndex = page * 10;
+
   try {
     const response =
       await pool.query(`SELECT  users.first_name, users.last_name, users.email, users.created_at, roles.id,
@@ -42,7 +46,7 @@ router.get("/users", async (req, res) => {
     
     INNER JOIN roles
     ON users_roles.role_id = roles.id`);
-    const data = response.rows.map((el) => {
+    const usersResponse = response.rows.map((el) => {
       return {
         id: el.user_id,
         firstName: el.first_name,
@@ -55,8 +59,13 @@ router.get("/users", async (req, res) => {
         },
       };
     });
+    const data = usersResponse.slice(startIndex, endIndex);
+    const dataResponse = {
+      page: usersResponse.length,
+      data: data,
+    };
 
-    return res.status(200).send(data);
+    return res.status(200).send(dataResponse);
   } catch (error) {
     console.log(error);
   }

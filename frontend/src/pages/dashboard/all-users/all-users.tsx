@@ -1,19 +1,29 @@
 import { FC, useEffect, useState } from 'react';
 
 import UserTable from '../../../components/users-table';
-import { DataDto } from '../../../generated/api';
+import { TableDataDto } from '../../../generated/api';
 import api from '../../../utils/api';
 
-const EmptyLayout: FC = () => {
-  const [data, setData] = useState<DataDto[]>([]);
+const AllUsers: FC = () => {
+  const [data, setData] = useState<TableDataDto | undefined>();
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const getCurrentPage = (currentPage: number) => {
+    setPage(currentPage);
+  };
+
   useEffect(() => {
     const fetcher = async () => {
-      const response = await api.user.usersGet();
+      setLoading(true);
+      const response = await api.user.usersGet({ page: page }).finally(() => setLoading(false));
+      console.log(response.data);
       setData(response.data);
     };
     fetcher();
-  }, []);
-  return <UserTable data={data} />;
+  }, [page]);
+
+  return <UserTable loading={loading} getCurrentPage={getCurrentPage} data={data} />;
 };
 
-export default EmptyLayout;
+export default AllUsers;

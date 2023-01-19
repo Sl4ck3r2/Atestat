@@ -4,15 +4,14 @@ import { MenuProps } from 'antd/lib/menu';
 import { FC } from 'react';
 import { useNavigate } from 'react-router';
 
-import { useUserProvider } from '../../../context/User';
-import { UserDto } from '../../../generated/api';
-import styles from '../index.module.scss';
+import { UserDto } from '../../generated/api';
+import styles from './index.module.scss';
 interface DashboardProps {
   user: UserDto | undefined;
 }
-const SuperAdminDashboard: FC<DashboardProps> = (user) => {
+
+const SuperAdminDashboard: FC<DashboardProps> = ({ user }) => {
   const navigate = useNavigate();
-  const { signOut } = useUserProvider();
   const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
     switch (key) {
       case 'all-users':
@@ -37,7 +36,7 @@ const SuperAdminDashboard: FC<DashboardProps> = (user) => {
       theme="dark"
       items={[
         {
-          label: `${user?.user?.firstName}`,
+          label: `${user?.firstName}`,
           key: 'profile',
           icon: <Avatar shape="square" size={48} icon={<UserOutlined />}></Avatar>,
         },

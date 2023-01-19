@@ -2,10 +2,10 @@ import { Layout } from 'antd';
 import { FC, ReactNode, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import AdminDashboard from '../../components/dashboard/admin-dashboard';
-import BottomDashboard from '../../components/dashboard/bottom-dashboard';
-import SuperAdminDashboard from '../../components/dashboard/superadmin-dashboard';
-import UserDashboard from '../../components/dashboard/user-dashboard';
+import AdminDashboard from '../../components/admin-menu';
+import BottomDashboard from '../../components/bottom-menu';
+import SuperAdminDashboard from '../../components/superadmin-menu';
+import UserDashboard from '../../components/user-menu';
 import { Role } from '../../context/Role';
 import { useUserProvider } from '../../context/User';
 import styles from './index.module.scss';
@@ -16,7 +16,6 @@ interface DefaultLayoutProps {
 const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   const { user } = useUserProvider();
   const [collappsed, setCollapsed] = useState(false);
-
   return (
     <Layout>
       <Layout.Sider

@@ -1,0 +1,27 @@
+.MenuContainer > * {
+    display: flex;
+    flex-direction: column;
+  }
+  :global {
+    .ant-layout-sider-trigger {
+        background-color: #242625 !important;
+      }
+      .ant-layout-header {
+        background-color: #EEEEEE !important;
+      }
+      .ant-layout-footer {
+         background-color: #EEEEEE !important;
+      }
+      .ant-layout-content{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+    }
+  
+  .Spacer {
+    flex: 1;
+  }
+  
+  
+  
