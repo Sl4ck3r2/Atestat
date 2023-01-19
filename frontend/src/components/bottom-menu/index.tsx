@@ -4,7 +4,7 @@ import { MenuProps } from 'antd/lib/menu';
 import { FC } from 'react';
 import { useNavigate } from 'react-router';
 
-import { useUserProvider } from '../../../context/User';
+import { useUserProvider } from '../../context/User';
 
 const BottomDashboard: FC = () => {
   const navigate = useNavigate();

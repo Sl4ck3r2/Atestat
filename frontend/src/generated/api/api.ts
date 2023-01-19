@@ -145,6 +145,25 @@ export type RoleDtoNameEnum = typeof RoleDtoNameEnum[keyof typeof RoleDtoNameEnu
 /**
  * 
  * @export
+ * @interface TableDataDto
+ */
+export interface TableDataDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof TableDataDto
+     */
+    'page': number;
+    /**
+     * 
+     * @type {Array<DataDto>}
+     * @memberof TableDataDto
+     */
+    'data'?: Array<DataDto>;
+}
+/**
+ * 
+ * @export
  * @interface UserDto
  */
 export interface UserDto {
@@ -430,10 +449,11 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Return the list of all users
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        usersGet: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -445,6 +465,10 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
 
 
     
@@ -481,11 +505,12 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Return the list of all users
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(options);
+        async usersGet(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableDataDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(page, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -511,11 +536,12 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Return the list of all users
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersGet(options?: any): AxiosPromise<Array<DataDto>> {
-            return localVarFp.usersGet(options).then((request) => request(axios, basePath));
+        usersGet(page?: number, options?: any): AxiosPromise<TableDataDto> {
+            return localVarFp.usersGet(page, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -535,15 +561,26 @@ export interface UserControllerApiUserCurrentGetRequest {
 }
 
 /**
+ * Request parameters for usersGet operation in UserControllerApi.
+ * @export
+ * @interface UserControllerApiUsersGetRequest
+ */
+export interface UserControllerApiUsersGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserControllerApiUsersGet
+     */
+    readonly page?: number
+}
+
+/**
  * UserControllerApi - object-oriented interface
  * @export
  * @class UserControllerApi
  * @extends {BaseAPI}
  */
 export class UserControllerApi extends BaseAPI {
-    getCurrentUser(arg0: { token: string; }) {
-        throw new Error('Method not implemented.');
-    }
     /**
      * 
      * @summary Return the curent user data.
@@ -559,12 +596,13 @@ export class UserControllerApi extends BaseAPI {
     /**
      * 
      * @summary Return the list of all users
+     * @param {UserControllerApiUsersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public usersGet(options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).usersGet(options).then((request) => request(this.axios, this.basePath));
+    public usersGet(requestParameters: UserControllerApiUsersGetRequest = {}, options?: AxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).usersGet(requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
