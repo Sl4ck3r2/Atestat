@@ -13,7 +13,6 @@ interface TableProps {
 
 const UserTable: React.FC<TableProps> = ({ data, getCurrentPage, loading }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(data);
   const columns: ColumnsType<DataDto> = [
     {
       title: 'First Name',

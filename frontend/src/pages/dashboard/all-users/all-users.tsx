@@ -17,7 +17,6 @@ const AllUsers: FC = () => {
     const fetcher = async () => {
       setLoading(true);
       const response = await api.user.usersGet({ page: page }).finally(() => setLoading(false));
-      console.log(response.data);
       setData(response.data);
     };
     fetcher();

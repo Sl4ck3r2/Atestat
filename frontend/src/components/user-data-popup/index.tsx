@@ -1,6 +1,6 @@
-import { Modal } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Modal } from 'antd';
 import { FC } from 'react';
-
 interface UserDataPopupProps {
   open: boolean | undefined;
   onOk: () => void;
@@ -9,8 +9,8 @@ interface UserDataPopupProps {
 
 const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel }) => {
   return (
-    <Modal title="Name+Profile Picture" open={open} onOk={onOk} onCancel={onCancel}>
-      <p>Some contents...</p>
+    <Modal open={open} onOk={onOk} onCancel={onCancel}>
+      <Avatar shape="square" size={64} icon={<UserOutlined />} />
       <p>Some contents...</p>
       <p>Some contents...</p>
     </Modal>

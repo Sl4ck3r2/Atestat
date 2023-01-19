@@ -211,9 +211,7 @@ tags:
         content:
           aplication/json:
             schema:
-              type: array
-              items:
-                "$ref": "#/components/schemas/TableDataDto"
+              "$ref": "#/components/schemas/TableDataDto"
 
 "/user/current":
   get:
