@@ -84,6 +84,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     return f(getRoles());
   };
 
+  //functie care modifica emailul din user cu emailul curent
+
   const signOut = () => {
     localStorage.removeItem('token');
     saveUser(undefined);

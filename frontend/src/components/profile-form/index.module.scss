@@ -1,0 +1,67 @@
+.photo {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
+  gap:3vh
+}
+
+.select {
+  width: 50%;
+}
+
+.roleInput {
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  margin-left: 5vh;
+  max-width: 100vh; 
+  flex-direction: column;
+  gap: 3vh;
+}
+.saveButton {
+  height: 7vh;
+  width: 25vh;
+  background-color: #452298 !important;
+  border-radius: 5px !important;
+  border: none;
+}
+
+.backButton {
+  color:#452298;
+  border-radius: 5px !important;
+  height: 7vh;
+  width: 25vh;
+
+}
+.backButton:hover {
+  color: #452298;
+  border-color: #452298;
+}
+
+:global {
+  .ant-avatar-lg {
+    width: 15vh;
+    height: 15vh;
+  }
+  .ant-input:focus,
+  .ant-input-focused{
+    border-color: #452298;
+    box-shadow: 0 0 0 2px rgba(33, 13, 218, 0.2);
+  }
+  .container.ant-input {
+    border-radius: 5px;
+    width: 100vh;
+  }
+  .ant-input:hover{
+    border-color: #452298;
+  }
+
+}
+
+

@@ -192,6 +192,30 @@ export interface UserDto {
      */
     'email': string;
     /**
+     * The city of each user
+     * @type {string}
+     * @memberof UserDto
+     */
+    'city': string;
+    /**
+     * The gender for each user
+     * @type {string}
+     * @memberof UserDto
+     */
+    'state': string;
+    /**
+     * The country for each user
+     * @type {string}
+     * @memberof UserDto
+     */
+    'country': string;
+    /**
+     * The profile picture URL
+     * @type {string}
+     * @memberof UserDto
+     */
+    'profilePictureUrl': string;
+    /**
      * 
      * @type {RoleDto}
      * @memberof UserDto
@@ -448,6 +472,49 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Update user data
+         * @param {string} token 
+         * @param {UserDto} userDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userCurrentPut: async (token: string, userDto: UserDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('userCurrentPut', 'token', token)
+            // verify required parameter 'userDto' is not null or undefined
+            assertParamExists('userCurrentPut', 'userDto', userDto)
+            const localVarPath = `/user/current`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (token !== undefined && token !== null) {
+                localVarHeaderParameter['token'] = String(token);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Return the list of all users
          * @param {number} [page] 
          * @param {*} [options] Override http request option.
@@ -504,6 +571,18 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update user data
+         * @param {string} token 
+         * @param {UserDto} userDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userCurrentPut(token: string, userDto: UserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userCurrentPut(token, userDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Return the list of all users
          * @param {number} [page] 
          * @param {*} [options] Override http request option.
@@ -535,6 +614,17 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @summary Update user data
+         * @param {string} token 
+         * @param {UserDto} userDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userCurrentPut(token: string, userDto: UserDto, options?: any): AxiosPromise<void> {
+            return localVarFp.userCurrentPut(token, userDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Return the list of all users
          * @param {number} [page] 
          * @param {*} [options] Override http request option.
@@ -558,6 +648,27 @@ export interface UserControllerApiUserCurrentGetRequest {
      * @memberof UserControllerApiUserCurrentGet
      */
     readonly token: string
+}
+
+/**
+ * Request parameters for userCurrentPut operation in UserControllerApi.
+ * @export
+ * @interface UserControllerApiUserCurrentPutRequest
+ */
+export interface UserControllerApiUserCurrentPutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserControllerApiUserCurrentPut
+     */
+    readonly token: string
+
+    /**
+     * 
+     * @type {UserDto}
+     * @memberof UserControllerApiUserCurrentPut
+     */
+    readonly userDto: UserDto
 }
 
 /**
@@ -591,6 +702,18 @@ export class UserControllerApi extends BaseAPI {
      */
     public userCurrentGet(requestParameters: UserControllerApiUserCurrentGetRequest, options?: AxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).userCurrentGet(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update user data
+     * @param {UserControllerApiUserCurrentPutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public userCurrentPut(requestParameters: UserControllerApiUserCurrentPutRequest, options?: AxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).userCurrentPut(requestParameters.token, requestParameters.userDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -1,16 +1,10 @@
 import { NotificationOutlined, TableOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu } from 'antd';
+import { Menu } from 'antd';
 import { MenuProps } from 'antd/lib/menu';
 import { FC } from 'react';
 import { useNavigate } from 'react-router';
 
-import { UserDto } from '../../generated/api';
-import styles from './index.module.scss';
-interface DashboardProps {
-  user: UserDto | undefined;
-}
-
-const SuperAdminDashboard: FC<DashboardProps> = ({ user }) => {
+const SuperAdminDashboard: FC = () => {
   const navigate = useNavigate();
   const handleMenuClick: MenuProps['onSelect'] = ({ key }) => {
     switch (key) {
@@ -30,18 +24,12 @@ const SuperAdminDashboard: FC<DashboardProps> = ({ user }) => {
   };
   return (
     <Menu
-      style={{ background: '#242625' }}
-      className={styles.MenuContainerStyle}
       mode="inline"
-      theme="dark"
+      theme="light"
       items={[
-        {
-          label: `${user?.firstName}`,
-          key: 'profile',
-          icon: <Avatar shape="square" size={48} icon={<UserOutlined />}></Avatar>,
-        },
         { label: 'All Users', key: 'all-users', icon: <TableOutlined /> },
         { label: 'Notification', key: 'notification', icon: <NotificationOutlined /> },
+        { label: 'Profile', key: 'profile', icon: <UserOutlined /> },
       ]}
       onSelect={handleMenuClick}
     ></Menu>

@@ -22,10 +22,9 @@ const BottomDashboard: FC = () => {
   };
   return (
     <Menu
-      style={{ background: '#242625' }}
       selectedKeys={[]}
       mode="inline"
-      theme="dark"
+      theme="light"
       items={[
         { label: 'Logout', key: 'logout', icon: <LogoutOutlined /> },
         { label: 'Settings', key: 'settings', icon: <SettingFilled /> },
