@@ -6,7 +6,7 @@
 .buttons {
   display: flex;
   justify-content: right;
-  gap:3vh
+  gap: 3vh;
 }
 
 .select {
@@ -20,7 +20,7 @@
 .container {
   display: flex;
   margin-left: 5vh;
-  max-width: 100vh; 
+  max-width: 100vh;
   flex-direction: column;
   gap: 3vh;
 }
@@ -33,11 +33,10 @@
 }
 
 .backButton {
-  color:#452298;
+  color: #452298;
   border-radius: 5px !important;
   height: 7vh;
   width: 25vh;
-
 }
 .backButton:hover {
   color: #452298;
@@ -50,7 +49,7 @@
     height: 15vh;
   }
   .ant-input:focus,
-  .ant-input-focused{
+  .ant-input-focused {
     border-color: #452298;
     box-shadow: 0 0 0 2px rgba(33, 13, 218, 0.2);
   }
@@ -58,8 +57,7 @@
     border-radius: 5px;
     width: 100vh;
   }
-  .ant-input:hover{
+  .ant-input:hover {
     border-color: #452298;
   }
-
 }

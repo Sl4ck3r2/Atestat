@@ -24,7 +24,6 @@ const ProfilePage: FC = () => {
           },
         })
         .finally(() => toast.success('Updated'));
-
       setLoading(false);
     } catch (error) {
       toast.error('Error');
