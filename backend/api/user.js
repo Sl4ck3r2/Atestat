@@ -2,7 +2,7 @@ const pool = require("../pool");
 const router = require("express").Router();
 const { verifyToken } = require("../middleware/auth");
 const { isEmailValid } = require("../helper.js");
-const jwt = require("jsonwebtoken");
+
 router.get("/user/current", verifyToken, async (req, res) => {
   try {
     const id = req.user.id;
@@ -38,10 +38,9 @@ router.get("/user/current", verifyToken, async (req, res) => {
 router.put("/user/current", verifyToken, async (req, res) => {
   const data = await req.body;
   const emailIsValid = await isEmailValid(data.email);
+  const previousEmail = req.user.email;
 
-  const token = req.headers.token;
-  const decriptedToken = jwt.verify(token, process.env.TOKEN_KEY);
-  if (decriptedToken.email != data.email) {
+  if (previousEmail.email !== data.email) {
     if (!!emailIsValid) {
       return res.status(409).send("Email alredy existing");
     }
@@ -49,7 +48,7 @@ router.put("/user/current", verifyToken, async (req, res) => {
   req.user.email = data.email;
   const response = await pool.query(
     `UPDATE users SET first_name = '${data.firstName}' , last_name = '${data.lastName}' , email = '${data.email}', city = '${data.city}', state= '${data.state}',
-       country='${data.country}', profile_picture_url = '${data.profilePictureUrl}' WHERE id= '${decriptedToken.id}'`
+       country='${data.country}', profile_picture_url = '${data.profilePictureUrl}' WHERE id= '${req.user.id}'`
   );
   return res.status(200).json("Data has been updated");
 });

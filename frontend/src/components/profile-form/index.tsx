@@ -26,7 +26,7 @@ const initialValues: ProfileFormState = {
 
 interface ProfileFormProps {
   onSubmit: (form: ProfileFormState) => void;
-  loading: boolean | undefined;
+  loading: boolean;
 }
 
 const { Option } = Select;
@@ -42,6 +42,7 @@ const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
     country: user?.country || '',
     profilePictureUrl: user?.profilePictureUrl || '',
   });
+
   return (
     <>
       <div className={styles.container}>

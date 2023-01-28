@@ -5,11 +5,8 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
-interface EmptyLayoutProps {
-  children?: ReactNode;
-}
 
-const HeaderContent: FC<EmptyLayoutProps> = ({ children }) => {
+const HeaderContent: FC = () => {
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/dashboard/profile');
