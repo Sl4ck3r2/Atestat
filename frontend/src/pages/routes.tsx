@@ -22,6 +22,7 @@ const Page = {
     Dashboard: {
       AllUsers: Loadable(lazy(() => import('./dashboard/all-users/all-users'))),
       Notification: Loadable(lazy(() => import('./dashboard/notification'))),
+      Profile: Loadable(lazy(() => import('./dashboard/profile'))),
     },
   },
   Login: Loadable(lazy(() => import('./login'))),
@@ -98,6 +99,15 @@ const routes: Array<RouteObject> = [
                 </Role>
               </>
             ),
+          },
+        ],
+      },
+      {
+        path: 'profile',
+        children: [
+          {
+            index: true,
+            element: <Page.Project.Dashboard.Profile />,
           },
         ],
       },

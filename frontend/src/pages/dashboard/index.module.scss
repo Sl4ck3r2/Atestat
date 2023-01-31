@@ -1,13 +1,13 @@
 .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 :global {
-.ant-layout-header {
+  .ant-layout-header {
     background-color: #242625 !important;
-}
-.ant-layout-footer {
+  }
+  .ant-layout-footer {
     background-color: #242625 !important;
-}
+  }
 }

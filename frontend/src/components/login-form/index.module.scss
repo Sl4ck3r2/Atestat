@@ -1,4 +1,6 @@
 .formControlStyle {
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   margin: auto;
   border-radius: 25px;
@@ -10,7 +12,7 @@
 }
 
 .inputStyles {
-  padding: 10px;
+  padding: 1.5vh;
   gap: 10px;
   width: 35vh;
   border: 1px solid #bb86fc;
@@ -21,7 +23,7 @@
   color: white;
   background: #bb86fc;
   text-align: center;
-  border-radius: 11px;
+  border-radius: 2vh;
   width: 15vh;
   height: 5vh;
 }
@@ -32,7 +34,7 @@
 }
 
 .fildsStyle {
-  margin-top: 10vh;
+  margin-top: 5vh;
   display: flex;
   justify-content: center;
 }

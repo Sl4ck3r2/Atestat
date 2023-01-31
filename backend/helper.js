@@ -3,14 +3,14 @@ const bcrypt = require("bcrypt");
 
 async function isEmailValid(email) {
   try {
-    const emails = await pool.query(
-      "SELECT email FROM users WHERE email = $1",
+    const emailUniqueness = await pool.query(
+      "SELECT email, id FROM users WHERE email = $1",
       [email]
     );
-    if (emails.rowCount == 0) {
-      return true;
+    if (emailUniqueness.rowCount == 0) {
+      return undefined;
     }
-    return false;
+    return emailUniqueness;
   } catch (error) {
     console.log(error);
   }

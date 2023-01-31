@@ -17,14 +17,15 @@ router.get("/authorization", verifyToken, async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const data = req.body;
+
     const emailExist = await isEmailValid(data.email);
-    if (!emailExist) {
+    if (!!emailExist) {
       const isPasswordCorrect = await isPasswordValid(
         data.password,
         data.email
       );
       if (isPasswordCorrect == true) {
-        const token = jwt.sign(data, process.env.TOKEN_KEY, {
+        const token = jwt.sign(emailExist.rows[0], process.env.TOKEN_KEY, {
           expiresIn: "2h",
         });
         return res
@@ -45,7 +46,7 @@ router.post("/register", async (req, res) => {
   try {
     const data = req.body;
     const emailIsValid = await isEmailValid(data.email);
-    if (!emailIsValid) {
+    if (!!emailIsValid) {
       return res.status(409).json("Email is allredy used");
     }
     const token = jwt.sign(data, process.env.TOKEN_KEY, {

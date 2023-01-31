@@ -1,26 +1,51 @@
-.MenuContainer > * {
-  display: flex;
-  flex-direction: column;
+.logo {
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.svgLogo {
+  height: 65px;
+  width: 65px;
+}
+
 :global {
-  .ant-layout-sider-trigger {
-      background-color: #242625 !important;
-    }
-    .ant-layout-header {
-      background-color: #EEEEEE !important;
-    }
-    .ant-layout-footer {
-       background-color: #EEEEEE !important;
-    }
-    .ant-layout-content{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+  }
+  .ant-layout-header {
+    background-color: #ffffff !important;
+    border-radius: 10px;
+    margin: 3vh;
+  }
+  .ant-layout-footer {
+    background-color: #eeeeee !important;
+  }
+
+  .ant-menu-item-selected {
+    color: #ffffff !important;
+  }
+  .ant-menu-item::after {
+    border-right: #452298 !important;
+  }
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #452298;
+    border-radius: 2px;
+  }
+  .ant-menu-light .ant-menu-item:hover,
+  .ant-menu-light .ant-menu-item-active,
+  .ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+  .ant-menu-light .ant-menu-submenu-active,
+  .ant-menu-light .ant-menu-submenu-title:hover {
+    color: #452298;
+  }
+}
+
+  .currentPage {
+    font-weight: 900;
   }
 
 .Spacer {
   flex: 1;
 }
-
-
