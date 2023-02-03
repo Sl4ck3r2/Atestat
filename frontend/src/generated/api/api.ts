@@ -516,11 +516,14 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Return the list of all users
+         * @param {string} token 
          * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersGet: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        usersGet: async (token: string, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('usersGet', 'token', token)
             const localVarPath = `/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -535,6 +538,10 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
+            }
+
+            if (token !== undefined && token !== null) {
+                localVarHeaderParameter['token'] = String(token);
             }
 
 
@@ -584,12 +591,13 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Return the list of all users
+         * @param {string} token 
          * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersGet(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableDataDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(page, options);
+        async usersGet(token: string, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableDataDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(token, page, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -626,12 +634,13 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Return the list of all users
+         * @param {string} token 
          * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersGet(page?: number, options?: any): AxiosPromise<TableDataDto> {
-            return localVarFp.usersGet(page, options).then((request) => request(axios, basePath));
+        usersGet(token: string, page?: number, options?: any): AxiosPromise<TableDataDto> {
+            return localVarFp.usersGet(token, page, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -679,6 +688,13 @@ export interface UserControllerApiUserCurrentPutRequest {
 export interface UserControllerApiUsersGetRequest {
     /**
      * 
+     * @type {string}
+     * @memberof UserControllerApiUsersGet
+     */
+    readonly token: string
+
+    /**
+     * 
      * @type {number}
      * @memberof UserControllerApiUsersGet
      */
@@ -724,8 +740,8 @@ export class UserControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public usersGet(requestParameters: UserControllerApiUsersGetRequest = {}, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).usersGet(requestParameters.page, options).then((request) => request(this.axios, this.basePath));
+    public usersGet(requestParameters: UserControllerApiUsersGetRequest, options?: AxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).usersGet(requestParameters.token, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

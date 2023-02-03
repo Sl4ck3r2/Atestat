@@ -16,7 +16,9 @@ const AllUsers: FC = () => {
   useEffect(() => {
     const fetcher = async () => {
       setLoading(true);
-      const response = await api.user.usersGet({ page: page }).finally(() => setLoading(false));
+      const response = await api.user
+        .usersGet({ token: localStorage.getItem('token') || '', page: page })
+        .finally(() => setLoading(false));
       setData(response.data);
     };
     fetcher();

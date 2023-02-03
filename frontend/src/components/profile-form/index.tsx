@@ -33,6 +33,8 @@ const { Option } = Select;
 
 const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
   const { user } = useUserProvider();
+  const [form] = Form.useForm();
+  console.log(form);
   const [defaultFormData, setDefaultFormData] = useState<UserDto>({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',

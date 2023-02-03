@@ -17,11 +17,15 @@ const verifyToken = (req, res, next) => {
 
 function authRole(role) {
   return (req, res, next) => {
-    if (req.user.role !== role) {
-      res.status(401);
-      return send("Not allowed");
+    if (req.user.role === "SUPERADMIN") {
+      return next();
     }
-    next();
+    if (req.user.role == role) {
+      return next();
+    }
+    if (req.user.role !== role) {
+      return res.status(403).send("Not allowed");
+    }
   };
 }
 

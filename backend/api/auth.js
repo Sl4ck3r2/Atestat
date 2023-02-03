@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const pool = require("../pool");
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
-const { isEmailValid, isPasswordValid } = require("../helper.js");
+const { isEmailValid, isPasswordValid } = require("../helper/helper");
 const { verifyToken } = require("../middleware/auth");
 
 router.get("/authorization", verifyToken, async (req, res) => {

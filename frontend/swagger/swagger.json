@@ -82,6 +82,15 @@
         "summary": "Return the list of all users",
         "parameters": [
           {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string",
+              "description": "The user token"
+            },
+            "required": true
+          },
+          {
             "in": "query",
             "name": "page",
             "schema": {
