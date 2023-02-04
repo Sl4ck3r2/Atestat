@@ -143,6 +143,37 @@
             }
           }
         }
+      },
+      "put": {
+        "summary": "Update user data",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          }
+        },
+        "tags": [
+          "user-controller"
+        ],
+        "responses": {
+          "200": {
+            "description": "The user data has been updated successfully"
+          }
+        }
       }
     }
   },
@@ -153,7 +184,11 @@
         "required": [
           "lastName",
           "firstName",
-          "email"
+          "email",
+          "city",
+          "state",
+          "country",
+          "profilePictureUrl"
         ],
         "properties": {
           "id": {
@@ -177,6 +212,26 @@
             "minLength": 1,
             "description": "The email of each user"
           },
+          "city": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The city of each user"
+          },
+          "state": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The gender for each user"
+          },
+          "country": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The country for each user"
+          },
+          "profilePictureUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The profile picture URL"
+          },
           "userRole": {
             "$ref": "#/components/schemas/RoleDto"
           }
@@ -186,6 +241,10 @@
           "firstName": "string",
           "lastName": "string",
           "email": "string",
+          "city": "string",
+          "state": "string",
+          "country": "string",
+          "profilePictureUrl": "string",
           "userRole": {
             "id": 0,
             "name": "ADMIN"

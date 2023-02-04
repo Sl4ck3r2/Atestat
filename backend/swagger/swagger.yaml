@@ -7,6 +7,10 @@ components:
       - lastName
       - firstName
       - email
+      - city
+      - state
+      - country
+      - profilePictureUrl
       properties:
         id:
           type: integer
@@ -25,13 +29,32 @@ components:
           type: string
           minLength: 1
           description: The email of each user
-          
+        city:
+          type: string
+          minLength:  1
+          description:  The city of each user
+        state:
+          type: string
+          minLength:  1
+          description:  The gender for each user
+        country:
+          type: string
+          minLength:  1
+          description:  The country for each user
+        profilePictureUrl:
+          type: string
+          minLength:  1
+          description:  The profile picture URL  
         userRole: {"$ref":"#/components/schemas/RoleDto"}
       example:
         id: 0
         firstName: string
         lastName: string
         email: string
+        city: string
+        state:  string
+        country:  string
+        profilePictureUrl:  string
         userRole:
           id: 0
           name: ADMIN
@@ -218,21 +241,42 @@ tags:
             schema:
               "$ref": "#/components/schemas/TableDataDto"
 
-"/user/current":
-  get:
-    summary:  Return the curent user data.
-    parameters:
-      - in: header
-        name: token
+paths:
+ "/user/current":
+    get:
+      summary:  Return the curent user data.
+      parameters:
+        - in: header
+          name: token
+          schema:
+            type: string
+          required: true
+      tags:
+      - user-controller
+      responses:
+        '200':
+          description:  OK
+          content:
+            aplication/json:
+              schema:
+                "$ref": "#/components/schemas/UserDto"
+    put:
+      summary: Update user data
+      parameters:
+      - name: token
+        in: header
+        required: true
         schema:
           type: string
+      requestBody:
         required: true
-    tags:
-    - user-controller
-    responses:
-      '200':
-        description:  OK
         content:
-          aplication/json:
+          application/json:
             schema:
               "$ref": "#/components/schemas/UserDto"
+      tags:
+      - user-controller
+      responses:
+        '200':
+          description: The user data has been updated successfully
+
