@@ -2,17 +2,8 @@ const bcrypt = require("bcrypt");
 const pool = require("../pool");
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
-const { isEmailValid, isPasswordValid } = require("../helper.js");
+const { isEmailValid, isPasswordValid } = require("../helper/helper.js");
 const { verifyToken } = require("../middleware/auth");
-
-router.get("/authorization", verifyToken, async (req, res) => {
-  try {
-    res.json(true);
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).send("Server Error");
-  }
-});
 
 router.post("/login", async (req, res) => {
   try {
