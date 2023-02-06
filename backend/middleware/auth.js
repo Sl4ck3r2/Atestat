@@ -20,12 +20,10 @@ const authRole = (requiredRole = []) => {
     requiredRole = [requiredRole];
   }
   return (req, res, next) => {
-    if (requiredRole.length) {
-      if (!requiredRole.includes(req.user.role)) {
-        return res.status(401).send("Not allowed");
-      }
-      return next();
+    if (requiredRole.length && !requiredRole.includes(req.user.role)) {
+      return res.status(401).send("Not allowed");
     }
+    return next();
   };
 };
 
