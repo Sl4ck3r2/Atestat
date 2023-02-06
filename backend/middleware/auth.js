@@ -21,15 +21,10 @@ const authRole = (requiredRole = []) => {
   }
   return (req, res, next) => {
     if (requiredRole.length) {
-      if (req.user.role.includes("SUPERADMIN")) {
-        return next();
-      }
-      if (requiredRole.includes(req.user.role)) {
-        return next();
-      }
       if (!requiredRole.includes(req.user.role)) {
-        return res.status(403).send("Not allowed");
+        return res.status(401).send("Not allowed");
       }
+      return next();
     }
   };
 };
