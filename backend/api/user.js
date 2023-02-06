@@ -56,7 +56,7 @@ router.put("/user/current", verifyToken, async (req, res) => {
 router.get(
   "/users",
   verifyToken,
-  authRole(ROLE.SUPERADMIN),
+  authRole([ROLE.SUPERADMIN, ROLE.ADMIN]),
   async (req, res) => {
     const page = req.query.page;
     const startIndex = (page - 1) * 10;

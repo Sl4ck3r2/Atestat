@@ -15,17 +15,22 @@ const verifyToken = (req, res, next) => {
   return next();
 };
 
-const authRole = (requiredRole) => {
+const authRole = (requiredRole = []) => {
+  if (typeof requiredRole === "string") {
+    requiredRole = [requiredRole];
+  }
   return (req, res, next) => {
     console.log(requiredRole, req.user.role);
-    if (requiredRole !== req.user.role) {
-      return res.status(403).send("Not allowed");
-    }
-    if (requiredRole === "SUPERADMIN") {
-      return next();
-    }
-    if (requiredRole === req.user.role) {
-      return next();
+    if (requiredRole.length) {
+      if (req.user.role.includes("SUPERADMIN")) {
+        return next();
+      }
+      if (requiredRole.includes(req.user.role)) {
+        return next();
+      }
+      if (!requiredRole.includes(req.user.role)) {
+        return res.status(403).send("Not allowed");
+      }
     }
   };
 };
