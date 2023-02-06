@@ -20,7 +20,6 @@ const authRole = (requiredRole = []) => {
     requiredRole = [requiredRole];
   }
   return (req, res, next) => {
-    console.log(requiredRole, req.user.role);
     if (requiredRole.length) {
       if (req.user.role.includes("SUPERADMIN")) {
         return next();
