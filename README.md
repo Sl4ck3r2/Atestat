@@ -2,22 +2,20 @@
 
 Is a simple project created using `create-react-app`.
 
-Required versions of `node` and `npm` are listened in `package.json` under `engine.node`
-and `engine.npm` keys (basically, on installing `nodejs` `npm` will be installed automatically too).
+Required versions of `node` and `npm` are listened in `package.json`
 
 ## Installation
 
 # Run following comands
 
-1. npm install --save-dev @types/cors
-2. npm install react-scripts --save
-3. npm i antd
+1. Run into backend npm install
+2. Run into frontend npm install, antd
 
 ## Runing
 
 Backend
 
-Create an .env file as in the example .env.example with the password from the postgres database and the key with which the token will be encrypted.
+Create an .env file as in the example .env.example with the password from the postgres database and the key with which the token will be encrypted both as string.
 Run nodemon server.js.
 
 Frontend
