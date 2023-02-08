@@ -3,7 +3,6 @@ const router = require("express").Router();
 const { verifyToken, authRole } = require("../middleware/auth");
 const { isEmailValid } = require("../helper/helper");
 const { ROLE } = require("../helper/roles");
-
 router.get("/user/current", verifyToken, async (req, res) => {
   try {
     const id = req.user.id;
@@ -57,7 +56,7 @@ router.put("/user/current", verifyToken, async (req, res) => {
 router.get(
   "/users",
   verifyToken,
-  authRole(ROLE.SUPERADMIN),
+  authRole([ROLE.SUPERADMIN, ROLE.ADMIN]),
   async (req, res) => {
     const page = req.query.page;
     const startIndex = (page - 1) * 10;

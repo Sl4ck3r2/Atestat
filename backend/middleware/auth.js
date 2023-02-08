@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = process.env;
-
+const pool = require("../pool");
 const verifyToken = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers["token"];
   if (!token) {
@@ -15,18 +15,16 @@ const verifyToken = (req, res, next) => {
   return next();
 };
 
-function authRole(role) {
+const authRole = (requiredRole = []) => {
+  if (typeof requiredRole === "string") {
+    requiredRole = [requiredRole];
+  }
   return (req, res, next) => {
-    if (req.user.role === "SUPERADMIN") {
-      return next();
+    if (requiredRole.length && !requiredRole.includes(req.user.role)) {
+      return res.status(401).send("Not allowed");
     }
-    if (req.user.role == role) {
-      return next();
-    }
-    if (req.user.role !== role) {
-      return res.status(403).send("Not allowed");
-    }
+    return next();
   };
-}
+};
 
 module.exports = { verifyToken, authRole };
