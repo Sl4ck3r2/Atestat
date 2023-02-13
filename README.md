@@ -15,7 +15,7 @@ Required versions of `node` and `npm` are listened in `package.json`
 
 Backend
 
-Create an .env file as in the example .env.example with the password from the postgres database and the key with which the token will be encrypted both as string.
+Create an .env file as in the example .env.example where REACT_DATABASE_PASSWORD represents the password from the PostgresSQL database, and TOKEN_KEY represents the key after which the token will be encrypted after logging in. Both variables will want to be of string type.
 Run nodemon server.js.
 
 Frontend
