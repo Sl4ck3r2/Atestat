@@ -1,9 +1,3 @@
-## Description
-
-Is a simple project created using `create-react-app`.
-
-Required versions of `node` and `npm` are listened in `package.json`
-
 ## Installation
 
 # Run following comands
