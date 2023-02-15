@@ -1,6 +1,4 @@
-## Installation
-
-# Run following commands
+# Installation
 
 1. Run into backend npm install
 2. Run into frontend npm install, antd
