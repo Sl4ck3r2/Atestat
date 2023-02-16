@@ -10,7 +10,7 @@ Well... Basically it is a simple project created using `create-react-app`.
 
 # Frontend
 
-1. Run `npm install` to install the packages
+1. Run `npm install, antd` to install the packages and antd
 2. Run `npm start` to start the frontend
 
 # Some notes
