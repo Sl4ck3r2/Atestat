@@ -1,17 +1,18 @@
-## Installation
+# Description
 
-# Run following commands
+Well... Basically it is a simple project created using `create-react-app`.
 
-1. Run into backend npm install
-2. Run into frontend npm install, antd
+# Backend
 
-## Runing
+1. Run `npm install` to install the packages
+2. Run `nodemon server.js` to start the backend
+3. You **must** create an .env file as in the example .env.example where `REACT_DATABASE_PASSWORD` represents the password from the PostgresSQL database, and `TOKEN_KEY` represents the key after which the token will be encrypted after logging in. Both variables will want to be of string type.
 
-Backend
+# Frontend
 
-Create an .env file as in the example .env.example where REACT_DATABASE_PASSWORD represents the password from the PostgresSQL database, and TOKEN_KEY represents the key after which the token will be encrypted after logging in. Both variables will want to be of string type.
-Run nodemon server.js.
+1. Run `npm install` to install the packages
+2. Run `npm start` to start the frontend
 
-Frontend
+# Some notes
 
-Run npm start.
+Don't forget that the project uses swagger, it can be found on the route `localhost:3001/api/swagger`
