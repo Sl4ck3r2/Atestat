@@ -2,6 +2,7 @@ import { Button, Form, Input, Select } from 'antd';
 import { FC } from 'react';
 
 import { useUserProvider } from '../../context/User';
+import { UserDto } from '../../generated/api';
 import ProfilePicture from '../profile-picture';
 import styles from './index.module.scss';
 export type ProfileFormState = {
@@ -34,7 +35,7 @@ const { Option } = Select;
 const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
   const { user } = useUserProvider();
   const [form] = Form.useForm();
-  const defaultFormData = {
+  const defaultFormData: UserDto = {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
