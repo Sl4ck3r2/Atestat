@@ -1,8 +1,10 @@
-import { Avatar, Button, Form, Input, Select } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
+import { Avatar, Badge, Button, Form, Input, Select } from 'antd';
 import { FC, useState } from 'react';
 
 import { useUserProvider } from '../../context/User';
 import { UserDto } from '../../generated/api';
+import ProfilePicture from '../profile-picture';
 import styles from './index.module.scss';
 export type ProfileFormState = {
   firstName: string;
@@ -33,6 +35,7 @@ const { Option } = Select;
 
 const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
   const { user } = useUserProvider();
+  const [form] = Form.useForm();
   const [defaultFormData, setDefaultFormData] = useState<UserDto>({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -43,10 +46,15 @@ const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
     profilePictureUrl: user?.profilePictureUrl || '',
   });
 
+  const getPictureUrl = (pictureUrl: string) => {
+    form.setFieldValue('profilePictureUrl', pictureUrl);
+  };
+
   return (
     <>
       <div className={styles.container}>
         <Form
+          form={form}
           className={styles.customForm}
           onFinish={onSubmit}
           onFinishFailed={() => console.log('fail')}
@@ -55,7 +63,7 @@ const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
         >
           <Form.Item name="profilePictureUrl">
             <div className={styles.photo}>
-              <Avatar shape="circle" size="large" src="https://i.imgur.com/FHa6sEA.jpg" />
+              <ProfilePicture getPictureUrl={getPictureUrl} currentPicture={defaultFormData.profilePictureUrl} />
             </div>
           </Form.Item>
           <Form.Item
