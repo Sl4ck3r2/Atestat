@@ -66,7 +66,7 @@ const ProfilePicture: FC<ProfilePictureProps> = ({ currentPicture, getPictureUrl
           className="avatar-uploader"
           showUploadList={false}
         >
-          {imageUrl != 'undefined' ? <img className={styles.image} src={imageUrl} alt="avatar" /> : uploadButton}
+          {imageUrl != '' ? <img className={styles.image} src={imageUrl} alt="avatar" /> : uploadButton}
         </Upload>
       </ImgCrop>
     </>

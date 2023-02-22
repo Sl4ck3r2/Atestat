@@ -1,9 +1,7 @@
-import { ClockCircleOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Form, Input, Select } from 'antd';
-import { FC, useState } from 'react';
+import { Button, Form, Input, Select } from 'antd';
+import { FC } from 'react';
 
 import { useUserProvider } from '../../context/User';
-import { UserDto } from '../../generated/api';
 import ProfilePicture from '../profile-picture';
 import styles from './index.module.scss';
 export type ProfileFormState = {
@@ -36,7 +34,7 @@ const { Option } = Select;
 const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
   const { user } = useUserProvider();
   const [form] = Form.useForm();
-  const [defaultFormData, setDefaultFormData] = useState<UserDto>({
+  const defaultFormData = {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
@@ -44,7 +42,7 @@ const SettingsForm: FC<ProfileFormProps> = ({ onSubmit, loading }) => {
     state: user?.state || '',
     country: user?.country || '',
     profilePictureUrl: user?.profilePictureUrl || '',
-  });
+  };
 
   const getPictureUrl = (pictureUrl: string) => {
     form.setFieldValue('profilePictureUrl', pictureUrl);
