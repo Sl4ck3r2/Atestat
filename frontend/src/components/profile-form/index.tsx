@@ -30,7 +30,7 @@ const initialValues: ProfileFormState = {
 const { Option } = Select;
 
 const SettingsForm: FC = () => {
-  const { user } = useUserProvider();
+  const { user, updateUser } = useUserProvider();
   const [loading, setLoading] = useState<boolean>(false);
   const [isEmailExist, setIsEmailExist] = useState<boolean | null>(null);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -77,6 +77,7 @@ const SettingsForm: FC = () => {
           country: form.getFieldValue('country'),
         },
       });
+      updateUser(form.getFieldsValue());
       setIsEmailExist(false);
       setLoading(false);
       setIsDisabled(true);
