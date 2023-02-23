@@ -40,7 +40,7 @@ router.put("/user/current", verifyToken, async (req, res) => {
   const emailIsValid = await isEmailValid(data.email);
   const previousEmail = req.user.email;
 
-  if (previousEmail.email !== data.email) {
+  if (previousEmail !== data.email) {
     if (!!emailIsValid) {
       return res.status(409).send("Email alredy existing");
     }
