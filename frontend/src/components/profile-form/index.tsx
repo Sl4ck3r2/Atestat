@@ -140,10 +140,12 @@ const SettingsForm: FC = () => {
               {
                 required: true,
                 message: 'Plase input your email',
+                whitespace: true,
               },
+
               ({ getFieldValue }) => ({
                 validator: () => {
-                  if (isEmailExist || getFieldValue('email') == usedEmail) {
+                  if (isEmailExist && getFieldValue('email') == usedEmail) {
                     resetState();
                     return Promise.reject(new Error('Email alredy exist'));
                   } else {
