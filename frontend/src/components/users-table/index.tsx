@@ -65,7 +65,7 @@ const UserTable: React.FC<TableProps> = ({ data, getCurrentPage, loading }) => {
         onChange={(page) => {
           getCurrentPage(page.current || 1);
         }}
-        onRow={() => {
+        onRow={(record, rowIndex) => {
           return {
             onClick: () => {
               showModal();
