@@ -1,33 +1,44 @@
-import { Image, Modal, Select, Tag } from 'antd';
+import { Image, Modal, Select, Skeleton, Tag } from 'antd';
 import { FC } from 'react';
 
 import { useUserProvider } from '../../context/User';
+import { UserDto } from '../../generated/api';
 import styles from '../user-data-popup/index.module.scss';
 interface UserDataPopupProps {
   open: boolean | undefined;
   onOk: () => void;
   onCancel: () => void;
+  dataUser: UserDto | undefined;
+  isLoading: boolean;
 }
 
-const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel }) => {
-  const { user } = useUserProvider();
+const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser, isLoading }) => {
   return (
     <Modal open={open} onOk={onOk} onCancel={onCancel}>
       <div className={styles.headContainer}>
         <div>
-          <h1>
-            {user?.firstName} {user?.lastName}
-          </h1>
+          <h1>{isLoading ? <Skeleton.Input active /> : dataUser?.firstName + ' ' + dataUser?.lastName}</h1>
           <p>
-            <strong>{user?.email}</strong>
+            <strong>{isLoading ? '' : dataUser?.email}</strong>
             <br />
             <strong className={styles.values}>
-              {user?.country},{user?.city}
+              {isLoading ? <Skeleton.Input size="small" active /> : dataUser?.country + ',' + dataUser?.city}
             </strong>
           </p>
         </div>
         <div className={styles.imageContainer}>
-          <Image sizes="small" className={styles.imageStyle} src={user?.profilePictureUrl}></Image>
+          {isLoading ? (
+            <Skeleton.Avatar active size={100} />
+          ) : (
+            <Image
+              sizes="small"
+              className={styles.imageStyle}
+              src={
+                dataUser?.profilePictureUrl ||
+                'https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg'
+              }
+            ></Image>
+          )}
         </div>
       </div>
       <div className={styles.spacer}>
@@ -36,50 +47,56 @@ const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel }) => {
       <div className={styles.bodyContainer}>
         <div>
           <strong>
-            First Name <br />
-          </strong>
-          <strong className={styles.values}>
-            {user?.firstName} <br />
-          </strong>
-          <br />
-          <strong>
-            Last Name Name
+            {isLoading ? <Skeleton.Input active size="small" /> : 'First Name'}
             <br />
           </strong>
           <strong className={styles.values}>
-            {user?.lastName} <br />
+            {isLoading ? '' : dataUser?.firstName} <br />
           </strong>
           <br />
           <strong>
-            Country
+            {isLoading ? <Skeleton.Input active size="small" /> : 'Last Name'}
             <br />
           </strong>
           <strong className={styles.values}>
-            {user?.country} <br />
+            {isLoading ? '' : dataUser?.lastName} <br />
           </strong>
           <br />
           <strong>
-            City
+            {isLoading ? <Skeleton.Input active size="small" /> : 'Country'}
             <br />
           </strong>
           <strong className={styles.values}>
-            {user?.city} <br />
+            {isLoading ? '' : dataUser?.country} <br />
+          </strong>
+          <br />
+          <strong>
+            {isLoading ? <Skeleton.Input active size="small" /> : 'City'}
+            <br />
+          </strong>
+          <strong className={styles.values}>
+            {isLoading ? '' : dataUser?.city} <br />
           </strong>
         </div>
         <div className={styles.secoundColumn}>
-          <strong>Role</strong>
+          <strong>{isLoading ? <Skeleton.Input active size="small" /> : 'Role'}</strong>
           <br />
           <p>
-            {user?.userRole?.name === 'SUPERADMIN' ? (
+            {isLoading ? (
+              ''
+            ) : dataUser?.userRole?.name === 'SUPERADMIN' ? (
               <Tag color="purple">SUPERADMIN</Tag>
-            ) : user?.userRole?.name === 'ADMIN' ? (
+            ) : dataUser?.userRole?.name === 'ADMIN' ? (
               <Tag color="red">ADMIN</Tag>
             ) : (
               <Tag color="green">USER</Tag>
             )}
           </p>
           <br />
-          <strong>Activity</strong>
+          <strong>
+            {isLoading ? <Skeleton.Input active size="small" /> : 'Activity'}
+            <br />
+          </strong>
         </div>
       </div>
     </Modal>

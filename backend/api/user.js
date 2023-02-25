@@ -35,6 +35,39 @@ router.get("/user/current", verifyToken, async (req, res) => {
   }
 });
 
+router.get(
+  "/user",
+  verifyToken,
+  authRole([ROLE.SUPERADMIN, ROLE.ADMIN]),
+  async (req, res) => {
+    const { email } = req.query;
+    const response = await pool.query(
+      `SELECT  *
+    FROM users
+    INNER JOIN users_roles
+    ON users.id = users_roles.user_id
+    
+    INNER JOIN roles
+    ON users_roles.role_id = roles.id
+    WHERE users.email='${email}'`
+    );
+    const user = {
+      firstName: response?.rows[0]?.first_name,
+      lastName: response?.rows[0]?.last_name,
+      email: response?.rows[0]?.email,
+      city: response?.rows[0]?.city,
+      state: response?.rows[0]?.state,
+      country: response?.rows[0]?.country,
+      profilePictureUrl: response?.rows[0]?.profile_picture_url,
+      userRole: {
+        id: response?.rows[0]?.role_id,
+        name: response?.rows[0]?.role,
+      },
+    };
+    return res.status(200).send(user);
+  }
+);
+
 router.put("/user/current", verifyToken, async (req, res) => {
   const data = await req.body;
   const emailIsValid = await isEmailValid(data.email);
