@@ -1,7 +1,9 @@
 import { Button, Form, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 
+import api from '../../utils/api';
 import BackgroundLogin from '../background-login';
 import styles from './index.module.scss';
 
@@ -19,26 +21,47 @@ const initialValues: FormState = {
   password: '',
 };
 
-interface RegisterFormProps {
-  loading?: boolean;
-  onSubmit: (formState: FormState) => void;
-  isSuccessfully: boolean | null;
-  resetState: any;
-}
-
-const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loading, onSubmit }) => {
+const RegisterForm: FC = () => {
   const [form] = Form.useForm();
   const [usedEmail, setUsedEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isEmailExist, setIsEmailExist] = useState<boolean | null>(null);
+
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (isSuccessfully) {
+    if (isEmailExist) {
       setUsedEmail(form.getFieldValue(['email']));
       form.validateFields(['email']);
-    } else if (isSuccessfully == false) {
+    } else if (isEmailExist == false) {
       form.resetFields();
       navigate('/login');
     }
-  }, [isSuccessfully, form, setUsedEmail, resetState]);
+  }, [isEmailExist, form, setUsedEmail, navigate]);
+
+  const resetState = () => {
+    setIsEmailExist(null);
+  };
+
+  const handleFormSubmit = async () => {
+    try {
+      setLoading(true);
+      await api.auth.registerPost({
+        registerRequest: {
+          firstName: form.getFieldValue('firstName'),
+          lastName: form.getFieldValue('lastName'),
+          email: form.getFieldValue('email'),
+          password: form.getFieldValue('password'),
+        },
+      });
+      setLoading(false);
+      setIsEmailExist(false);
+      toast.success('Succesfuly');
+    } catch (error) {
+      setLoading(false);
+      setIsEmailExist(true);
+    }
+  };
 
   return (
     <BackgroundLogin>
@@ -54,7 +77,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
             wrapperCol={{ span: 30 }}
             initialValues={initialValues}
             autoComplete="off"
-            onFinish={onSubmit}
+            onFinish={handleFormSubmit}
             onFinishFailed={() => console.log('fail')}
           >
             <Form.Item
@@ -82,7 +105,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ resetState, isSuccessfully, loadi
                 },
                 ({ getFieldValue }) => ({
                   validator: () => {
-                    if (isSuccessfully && getFieldValue('email') === usedEmail) {
+                    if (isEmailExist && getFieldValue('email') === usedEmail) {
                       resetState();
                       return Promise.reject(new Error('Email alredy exist'));
                     } else {
