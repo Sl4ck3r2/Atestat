@@ -38,20 +38,18 @@ router.get("/user/current", verifyToken, async (req, res) => {
 router.put("/user/current", verifyToken, async (req, res) => {
   const data = await req.body;
   const emailIsValid = await isEmailValid(data.email);
-  const id = req.user.id;
+  const previousEmail = req.user.email;
 
-  if (!!emailIsValid) {
-    if (emailIsValid.rows[0].id !== id) {
+  if (previousEmail.email !== data.email) {
+    if (!!emailIsValid) {
       return res.status(409).send("Email alredy existing");
     }
   }
-
   req.user.email = data.email;
   const response = await pool.query(
     `UPDATE users SET first_name = '${data.firstName}' , last_name = '${data.lastName}' , email = '${data.email}', city = '${data.city}', state= '${data.state}',
        country='${data.country}', profile_picture_url = '${data.profilePictureUrl}' WHERE id= '${req.user.id}'`
   );
-
   return res.status(200).json("Data has been updated");
 });
 

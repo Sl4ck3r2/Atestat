@@ -1,5 +1,6 @@
 import { Layout } from 'antd';
 import { FC, ReactNode, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Outlet } from 'react-router-dom';
 
 import AdminDashboard from '../../components/admin-menu';
@@ -51,9 +52,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
           <HeaderContent />
         </Layout.Header>
         <Layout.Content style={{ margin: '24px' }}>{children || <Outlet />}</Layout.Content>
-        <Layout.Footer>
-          <h1 className={styles.footer}>Copyright © 2023 MxO. All Rights Reserved</h1>
-        </Layout.Footer>
+        <Layout.Footer />
       </Layout>
     </Layout>
   );

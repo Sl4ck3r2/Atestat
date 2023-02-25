@@ -1,8 +1,4 @@
 {
-  "scripts": {
-    "dev": "nodemon server.js",
-    "build": "npm i"
-  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",

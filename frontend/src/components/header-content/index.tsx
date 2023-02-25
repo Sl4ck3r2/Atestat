@@ -4,11 +4,9 @@ import { FC, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import { useUserProvider } from '../../context/User';
 import styles from './index.module.scss';
 
 const HeaderContent: FC = () => {
-  const user = useUserProvider();
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/dashboard/profile');
@@ -25,7 +23,7 @@ const HeaderContent: FC = () => {
           onClick={handleNavigate}
           shape="circle"
           size={40}
-          src={user.user?.profilePictureUrl}
+          src="https://i.imgur.com/FHa6sEA.jpg"
         />
       </div>
     </div>
