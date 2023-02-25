@@ -1,5 +1,6 @@
 .photo {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .buttons {
@@ -12,7 +13,7 @@
   width: 50%;
 }
 
-.countryInput {
+.roleInput {
   width: 50%;
 }
 

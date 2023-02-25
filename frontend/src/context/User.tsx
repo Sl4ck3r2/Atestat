@@ -13,7 +13,6 @@ interface UserContextInterface {
   setToken: Dispatch<any>;
   roleGetter: (f: (v: UserRolesIsFunction) => boolean) => boolean;
   signOut: () => void;
-  updateUser: (form: UserDto) => void;
 }
 
 const defaultValues: UserContextInterface = {
@@ -22,7 +21,6 @@ const defaultValues: UserContextInterface = {
   },
   setToken(): void {},
   signOut(): void {},
-  updateUser(): void {},
   user: undefined,
   userLoading: false,
 };
@@ -51,11 +49,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     } catch (e) {
       console.error(e);
     }
-  };
-
-  const updateUser = (form: UserDto) => {
-    const newUser: UserDto = form;
-    saveUser((prevState) => ({ ...prevState, ...newUser }));
   };
 
   const getRoles = (): UserRolesIsFunction => {
@@ -97,9 +90,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setToken, roleGetter, userLoading, signOut, updateUser }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ user, setToken, roleGetter, userLoading, signOut }}>{children}</UserContext.Provider>
   );
 };
 

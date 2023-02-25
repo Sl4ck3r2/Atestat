@@ -515,48 +515,6 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Return the data from the pointed email
-         * @param {string} token 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userGet: async (token: string, email?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'token' is not null or undefined
-            assertParamExists('userGet', 'token', token)
-            const localVarPath = `/user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (email !== undefined) {
-                localVarQueryParameter['email'] = email;
-            }
-
-            if (token !== undefined && token !== null) {
-                localVarHeaderParameter['token'] = String(token);
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Return the list of all users
          * @param {string} token 
          * @param {number} [page] 
@@ -632,18 +590,6 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Return the data from the pointed email
-         * @param {string} token 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async userGet(token: string, email?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userGet(token, email, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Return the list of all users
          * @param {string} token 
          * @param {number} [page] 
@@ -684,17 +630,6 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          */
         userCurrentPut(token: string, userDto: UserDto, options?: any): AxiosPromise<void> {
             return localVarFp.userCurrentPut(token, userDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Return the data from the pointed email
-         * @param {string} token 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userGet(token: string, email?: string, options?: any): AxiosPromise<UserDto> {
-            return localVarFp.userGet(token, email, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -743,27 +678,6 @@ export interface UserControllerApiUserCurrentPutRequest {
      * @memberof UserControllerApiUserCurrentPut
      */
     readonly userDto: UserDto
-}
-
-/**
- * Request parameters for userGet operation in UserControllerApi.
- * @export
- * @interface UserControllerApiUserGetRequest
- */
-export interface UserControllerApiUserGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserControllerApiUserGet
-     */
-    readonly token: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof UserControllerApiUserGet
-     */
-    readonly email?: string
 }
 
 /**
@@ -816,18 +730,6 @@ export class UserControllerApi extends BaseAPI {
      */
     public userCurrentPut(requestParameters: UserControllerApiUserCurrentPutRequest, options?: AxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).userCurrentPut(requestParameters.token, requestParameters.userDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Return the data from the pointed email
-     * @param {UserControllerApiUserGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserControllerApi
-     */
-    public userGet(requestParameters: UserControllerApiUserGetRequest, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).userGet(requestParameters.token, requestParameters.email, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

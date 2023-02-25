@@ -1,4 +1,4 @@
-import { BuildOutlined, GroupOutlined, UserOutlined } from '@ant-design/icons';
+import { BuildOutlined, GroupOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { MenuProps } from 'antd/lib/menu';
 import { FC } from 'react';
@@ -26,7 +26,6 @@ const AdminDashboard: FC = () => {
       items={[
         { label: 'My Groups', key: 'my-groups', icon: <GroupOutlined /> },
         { label: 'Create Group', key: 'create-group', icon: <BuildOutlined /> },
-        { label: 'Profile', key: 'profile', icon: <UserOutlined /> },
       ]}
       onSelect={handleMenuClick}
     ></Menu>

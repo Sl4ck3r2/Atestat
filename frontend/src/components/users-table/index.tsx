@@ -2,8 +2,7 @@ import Table from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useState } from 'react';
 
-import { DataDto, TableDataDto, UserDto } from '../../generated/api';
-import api from '../../utils/api';
+import { DataDto, TableDataDto } from '../../generated/api';
 import UserDataPopup from '../user-data-popup';
 import styles from './index.module.scss';
 interface TableProps {
@@ -14,25 +13,6 @@ interface TableProps {
 
 const UserTable: React.FC<TableProps> = ({ data, getCurrentPage, loading }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [clickedUser, setClickedUser] = useState<UserDto | undefined>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleRowClick = async (email: string) => {
-    try {
-      setIsLoading(true);
-      await api.user
-        .userGet({
-          token: localStorage.getItem('token') || '',
-          email: email,
-        })
-
-        .then((res) => {
-          setIsLoading(false);
-          setClickedUser(res.data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const columns: ColumnsType<DataDto> = [
     {
       title: 'First Name',
@@ -85,22 +65,15 @@ const UserTable: React.FC<TableProps> = ({ data, getCurrentPage, loading }) => {
         onChange={(page) => {
           getCurrentPage(page.current || 1);
         }}
-        onRow={(record, rowIndex) => {
+        onRow={() => {
           return {
             onClick: () => {
-              handleRowClick(record.email);
               showModal();
             },
           };
         }}
       ></Table>
-      <UserDataPopup
-        isLoading={isLoading}
-        dataUser={clickedUser}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      />
+      <UserDataPopup open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
     </>
   );
 };

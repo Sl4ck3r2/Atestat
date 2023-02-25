@@ -1,28 +1,34 @@
-CREATE TABLE IF NOT EXISTS roles (
-    id SERIAL PRIMARY KEY,
-    role VARCHAR(20) NOT NULL UNIQUE
+BEGIN;
+CREATE TABLE IF NOT EXISTS public.roles (
+    id bigint NOT NULL DEFAULT nextval('roles_id_seq'::regclass),
+    role character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT roles_pkey PRIMARY KEY (id),
+    CONSTRAINT roles_name_key UNIQUE (role)
 );
-CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    first_name VARCHAR(120),
-    last_name VARCHAR(120),
-    city VARCHAR(120),
-    state VARCHAR(120),
-    country VARCHAR(120),
-    profile_picture_url VARCHAR(255)
+CREATE TABLE IF NOT EXISTS public.users (
+    id bigint NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    email character varying(255) COLLATE pg_catalog."default",
+    password character varying(255) COLLATE pg_catalog."default",
+    first_name character varying(120) COLLATE pg_catalog."default",
+    last_name character varying(120) COLLATE pg_catalog."default",
+    city character varying(120) COLLATE pg_catalog."default",
+    state character varying(120) COLLATE pg_catalog."default",
+    country character varying(120) COLLATE pg_catalog."default",
+    profile_picture_url character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT users_email_key UNIQUE (email)
 );
-CREATE TABLE IF NOT EXISTS users_roles (
-    id SERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    role_id BIGINT DEFAULT 3,
-    CONSTRAINT users_roles_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION
+CREATE TABLE IF NOT EXISTS public.users_roles (
+    id bigint NOT NULL DEFAULT nextval('users_roles_id_seq'::regclass),
+    user_id bigint NOT NULL,
+    role_id bigint DEFAULT 3,
+    CONSTRAINT users_roles_pkey PRIMARY KEY (id)
 );
-INSERT INTO roles (id, role)
-VALUES (1, 'SUPERADMIN');
-INSERT INTO roles (id, role)
-VALUES (2, 'ADMIN');
-INSERT INTO roles (id, role)
-VALUES (3, 'USER');
+ALTER TABLE IF EXISTS public.users_roles
+ADD CONSTRAINT users_roles_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE IF EXISTS public.users_roles
+ADD CONSTRAINT users_roles_user_id_fkey1 FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE IF EXISTS public.users_roles
+ADD CONSTRAINT users_roles_user_id_fkey2 FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
+END;

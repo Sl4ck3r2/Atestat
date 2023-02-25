@@ -35,56 +35,21 @@ router.get("/user/current", verifyToken, async (req, res) => {
   }
 });
 
-router.get(
-  "/user",
-  verifyToken,
-  authRole([ROLE.SUPERADMIN, ROLE.ADMIN]),
-  async (req, res) => {
-    const { email } = req.query;
-    const response = await pool.query(
-      `SELECT  *
-    FROM users
-    INNER JOIN users_roles
-    ON users.id = users_roles.user_id
-    
-    INNER JOIN roles
-    ON users_roles.role_id = roles.id
-    WHERE users.email='${email}'`
-    );
-    const user = {
-      firstName: response?.rows[0]?.first_name,
-      lastName: response?.rows[0]?.last_name,
-      email: response?.rows[0]?.email,
-      city: response?.rows[0]?.city,
-      state: response?.rows[0]?.state,
-      country: response?.rows[0]?.country,
-      profilePictureUrl: response?.rows[0]?.profile_picture_url,
-      userRole: {
-        id: response?.rows[0]?.role_id,
-        name: response?.rows[0]?.role,
-      },
-    };
-    return res.status(200).send(user);
-  }
-);
-
 router.put("/user/current", verifyToken, async (req, res) => {
   const data = await req.body;
   const emailIsValid = await isEmailValid(data.email);
-  const id = req.user.id;
+  const previousEmail = req.user.email;
 
-  if (!!emailIsValid) {
-    if (emailIsValid.rows[0].id !== id) {
+  if (previousEmail.email !== data.email) {
+    if (!!emailIsValid) {
       return res.status(409).send("Email alredy existing");
     }
   }
-
   req.user.email = data.email;
   const response = await pool.query(
     `UPDATE users SET first_name = '${data.firstName}' , last_name = '${data.lastName}' , email = '${data.email}', city = '${data.city}', state= '${data.state}',
        country='${data.country}', profile_picture_url = '${data.profilePictureUrl}' WHERE id= '${req.user.id}'`
   );
-
   return res.status(200).json("Data has been updated");
 });
 
