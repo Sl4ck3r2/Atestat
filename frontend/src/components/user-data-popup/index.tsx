@@ -1,7 +1,6 @@
-import { Image, Modal, Select, Skeleton, Tag } from 'antd';
+import { Image, Modal, Radio, Skeleton, Space, Tag } from 'antd';
 import { FC } from 'react';
 
-import { useUserProvider } from '../../context/User';
 import { UserDto } from '../../generated/api';
 import styles from '../user-data-popup/index.module.scss';
 interface UserDataPopupProps {
@@ -13,6 +12,7 @@ interface UserDataPopupProps {
 }
 
 const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser, isLoading }) => {
+  console.log(dataUser?.userRole?.id);
   return (
     <Modal open={open} onOk={onOk} onCancel={onCancel}>
       <div className={styles.headContainer}>
@@ -82,15 +82,23 @@ const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser,
           <strong>{isLoading ? <Skeleton.Input active size="small" /> : 'Role'}</strong>
           <br />
           <p>
-            {isLoading ? (
-              ''
-            ) : dataUser?.userRole?.name === 'SUPERADMIN' ? (
-              <Tag color="purple">SUPERADMIN</Tag>
-            ) : dataUser?.userRole?.name === 'ADMIN' ? (
-              <Tag color="red">ADMIN</Tag>
-            ) : (
-              <Tag color="green">USER</Tag>
-            )}
+            <Radio.Group defaultValue={dataUser?.userRole?.id}>
+              {isLoading ? (
+                ''
+              ) : (
+                <Space direction="vertical">
+                  <Radio value={1}>
+                    <Tag color="purple">SUPERADMIN</Tag>
+                  </Radio>
+                  <Radio value={2}>
+                    <Tag color="red">ADMIN</Tag>
+                  </Radio>
+                  <Radio value={3}>
+                    <Tag color="green">USER</Tag>
+                  </Radio>
+                </Space>
+              )}
+            </Radio.Group>
           </p>
           <br />
           <strong>
