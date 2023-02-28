@@ -1,7 +1,6 @@
-import { Image, Modal, Select, Skeleton, Tag } from 'antd';
-import { FC } from 'react';
+import { Image, Modal, Radio, Skeleton, Space, Tag } from 'antd';
+import { FC, useEffect } from 'react';
 
-import { useUserProvider } from '../../context/User';
 import { UserDto } from '../../generated/api';
 import styles from '../user-data-popup/index.module.scss';
 interface UserDataPopupProps {
@@ -13,18 +12,19 @@ interface UserDataPopupProps {
 }
 
 const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser, isLoading }) => {
+  const userRoleId = dataUser?.userRole?.id;
   return (
     <Modal open={open} onOk={onOk} onCancel={onCancel}>
       <div className={styles.headContainer}>
         <div>
           <h1>{isLoading ? <Skeleton.Input active /> : dataUser?.firstName + ' ' + dataUser?.lastName}</h1>
-          <p>
+          <div>
             <strong>{isLoading ? '' : dataUser?.email}</strong>
             <br />
             <strong className={styles.values}>
               {isLoading ? <Skeleton.Input size="small" active /> : dataUser?.country + ',' + dataUser?.city}
             </strong>
-          </p>
+          </div>
         </div>
         <div className={styles.imageContainer}>
           {isLoading ? (
@@ -81,17 +81,25 @@ const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser,
         <div className={styles.secoundColumn}>
           <strong>{isLoading ? <Skeleton.Input active size="small" /> : 'Role'}</strong>
           <br />
-          <p>
+          <div>
             {isLoading ? (
               ''
-            ) : dataUser?.userRole?.name === 'SUPERADMIN' ? (
-              <Tag color="purple">SUPERADMIN</Tag>
-            ) : dataUser?.userRole?.name === 'ADMIN' ? (
-              <Tag color="red">ADMIN</Tag>
             ) : (
-              <Tag color="green">USER</Tag>
+              <Radio.Group defaultValue={userRoleId}>
+                <Space defaultChecked={true} direction="vertical">
+                  <Radio value="1">
+                    <Tag color="purple">SUPERADMIN</Tag>
+                  </Radio>
+                  <Radio value="2">
+                    <Tag color="red">ADMIN</Tag>
+                  </Radio>
+                  <Radio value="3">
+                    <Tag color="green">USER</Tag>
+                  </Radio>
+                </Space>
+              </Radio.Group>
             )}
-          </p>
+          </div>
           <br />
           <strong>
             {isLoading ? <Skeleton.Input active size="small" /> : 'Activity'}
