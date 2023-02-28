@@ -12,19 +12,19 @@ interface UserDataPopupProps {
 }
 
 const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser, isLoading }) => {
-  const ROLE = dataUser?.userRole?.id;
+  const userRoleId = dataUser?.userRole?.id;
   return (
     <Modal open={open} onOk={onOk} onCancel={onCancel}>
       <div className={styles.headContainer}>
         <div>
           <h1>{isLoading ? <Skeleton.Input active /> : dataUser?.firstName + ' ' + dataUser?.lastName}</h1>
-          <p>
+          <div>
             <strong>{isLoading ? '' : dataUser?.email}</strong>
             <br />
             <strong className={styles.values}>
               {isLoading ? <Skeleton.Input size="small" active /> : dataUser?.country + ',' + dataUser?.city}
             </strong>
-          </p>
+          </div>
         </div>
         <div className={styles.imageContainer}>
           {isLoading ? (
@@ -81,11 +81,11 @@ const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser,
         <div className={styles.secoundColumn}>
           <strong>{isLoading ? <Skeleton.Input active size="small" /> : 'Role'}</strong>
           <br />
-          <p>
+          <div>
             {isLoading ? (
               ''
             ) : (
-              <Radio.Group defaultValue={dataUser?.userRole?.id}>
+              <Radio.Group defaultValue={userRoleId}>
                 <Space defaultChecked={true} direction="vertical">
                   <Radio value="1">
                     <Tag color="purple">SUPERADMIN</Tag>
@@ -99,7 +99,7 @@ const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser,
                 </Space>
               </Radio.Group>
             )}
-          </p>
+          </div>
           <br />
           <strong>
             {isLoading ? <Skeleton.Input active size="small" /> : 'Activity'}
