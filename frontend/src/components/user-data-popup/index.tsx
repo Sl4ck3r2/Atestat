@@ -1,7 +1,10 @@
 import { Image, Modal, Radio, Skeleton, Space, Tag } from 'antd';
-import { FC, useEffect } from 'react';
+import { RadioChangeEvent } from 'antd/lib/radio/interface';
+import { FC, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { UserDto } from '../../generated/api';
+import api from '../../utils/api';
 import styles from '../user-data-popup/index.module.scss';
 interface UserDataPopupProps {
   open: boolean | undefined;
@@ -13,8 +16,39 @@ interface UserDataPopupProps {
 
 const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser, isLoading }) => {
   const userRoleId = dataUser?.userRole?.id;
+  const [roleId, setRoleId] = useState();
+  const [isDisable, setIsDisable] = useState<boolean>(true);
+
+  const handleRole = (e: RadioChangeEvent) => {
+    if (dataUser?.userRole?.id === e.target.value) {
+      setIsDisable(true);
+    } else {
+      setIsDisable(false);
+    }
+    setRoleId(e.target.value);
+  };
+
+  const handleSubmitChangesRole = async () => {
+    try {
+      api.user.roleUpdatePut({
+        token: localStorage.getItem('token') || '',
+        email: dataUser?.email,
+        id: roleId,
+      });
+      toast.success('Updated');
+    } catch (error) {
+      console.log(error);
+      toast.error('Error');
+    }
+  };
+
   return (
-    <Modal open={open} onOk={onOk} onCancel={onCancel}>
+    <Modal
+      open={open}
+      okButtonProps={{ onClick: handleSubmitChangesRole, disabled: isDisable }}
+      onOk={onOk}
+      onCancel={onCancel}
+    >
       <div className={styles.headContainer}>
         <div>
           <h1>{isLoading ? <Skeleton.Input active /> : dataUser?.firstName + ' ' + dataUser?.lastName}</h1>
@@ -85,7 +119,7 @@ const UserDataPopup: FC<UserDataPopupProps> = ({ open, onOk, onCancel, dataUser,
             {isLoading ? (
               ''
             ) : (
-              <Radio.Group defaultValue={userRoleId}>
+              <Radio.Group defaultValue={userRoleId} onChange={handleRole}>
                 <Space defaultChecked={true} direction="vertical">
                   <Radio value="1">
                     <Tag color="purple">SUPERADMIN</Tag>
