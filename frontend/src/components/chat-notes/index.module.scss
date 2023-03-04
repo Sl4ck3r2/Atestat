@@ -1,0 +1,75 @@
+.container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.bodyContainer{
+    display: flex;
+    align-items: stretch;
+    flex-direction: column  ;
+}
+
+//ChatHeader
+.title {
+    font-size: 4rem;
+}
+
+.searchBar{
+    display: flex;
+}
+
+.utils{
+ display: flex;
+ justify-content: end;
+ border-bottom:1px solid black; ;
+}
+
+//Converation 
+
+.converationContainer {
+    margin-top:10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: stretch;
+}
+
+.converationData {
+    display: flex;
+    flex:1;
+    margin-left: 10px;
+}
+
+.conversationBorder {
+    border-bottom: 1px grey solid;
+    margin-left: 10px;
+}
+
+.conversationDataContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.converationTime {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-end;
+}
+
+//MessageList
+.messageListContainer {
+    max-height: 500px;
+    overflow: auto;
+}
+
+//ToolBar
+
+.toolBarContainer {
+    
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
