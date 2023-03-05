@@ -1,10 +1,11 @@
 import { Spin } from 'antd';
 import { FC } from 'react';
 
-type FullscreenLoaderProps = { className?: string };
-const FullscreenLoader: FC<FullscreenLoaderProps> = () => {
+import styles from './index.module.scss';
+
+const FullscreenLoader: FC = () => {
   return (
-    <div>
+    <div className={styles.spinner}>
       <Spin />
     </div>
   );
