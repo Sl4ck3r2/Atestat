@@ -24,7 +24,7 @@ const Conversation: FC = () => {
           </div>
           <div className={styles.converationTime}>
             <p>12:42</p>
-            <Badge count={99 + '+'} />
+            <Badge style={{ marginTop: '5px' }} color="#AA14F0" count={99 + '+'} />
           </div>
         </div>
         <div className={styles.conversationBorder}></div>

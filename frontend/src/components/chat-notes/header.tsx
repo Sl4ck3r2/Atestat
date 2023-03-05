@@ -1,6 +1,6 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Input } from 'antd';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useState } from 'react';
 
 import styles from './index.module.scss';
 interface ChatHeaderProps {
@@ -8,15 +8,39 @@ interface ChatHeaderProps {
 }
 
 const ChatHeader: FC<ChatHeaderProps> = () => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handleFilterClick = () => {
+    setIsPressed(!isPressed);
+  };
+
   return (
-    <div>
+    <div className={styles.conversationHeader}>
       <h1 className={styles.title}>Chat</h1>
       <div className={styles.searchBar}>
-        <Input />
-        <Button type="primary" shape="circle" icon={<SearchOutlined />} />
+        <Input
+          size="large"
+          style={{ borderRadius: '5x', marginTop: '15px' }}
+          prefix={<SearchOutlined />}
+          placeholder="Search"
+        />
+        <Button
+          style={{
+            color: isPressed ? 'white' : '#AA14F0',
+            backgroundColor: isPressed ? '#AA14F0' : '#EEEEEE',
+            marginLeft: '5px',
+            marginTop: '18px',
+          }}
+          type="text"
+          onClick={handleFilterClick}
+          shape="circle"
+          icon={<FilterOutlined />}
+        />
       </div>
       <div className={styles.utils}>
-        <Button type="dashed">Grup Nou</Button>
+        <Button style={{ color: '#AA14F0' }} size="large" type="text">
+          New Group
+        </Button>
       </div>
     </div>
   );

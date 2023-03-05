@@ -16,8 +16,7 @@ const Chat: FC<ChatProps> = () => {
       <ChatHeader />
       <div className={styles.bodyContainer}>
         <MessageList />
-        <div>kjasdhsakjd</div>
-        {/* <ToolBar /> */}
+        <ToolBar />
       </div>
     </div>
   );
