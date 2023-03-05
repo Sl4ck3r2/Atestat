@@ -25,9 +25,6 @@
 }
 
 .searchBar {
-  .Input:hover {
-    border-color: #bc8cf2;
-  }
   padding: 10px;
   display: flex;
 }
@@ -118,3 +115,83 @@
   margin-top:10px;
 }
 
+//MESSAGECHATHEADER
+
+.messageChatHeaderContainer {
+  display: flex;
+  margin-top:10px;
+  align-items: center;
+  border-bottom: 1px solid grey;
+  
+}
+
+.messageChatHeaderImage {
+  display: flex;
+  margin-left: 40px;
+  align-items: center;
+  margin-bottom: 5px;
+
+}
+
+.messageChatHeaderFriendName{
+  margin-left: 10px;
+}
+
+//MESSAGECHATBODY
+
+.messageChatBodyContainer {
+  overflow: auto;
+  max-height: 500px;
+  min-height: 500px;
+  background-color: #bc8cf2;
+}
+
+.messageChatBodyContainer::-webkit-scrollbar {
+  width: 6px;
+  display: block;
+}
+
+.messageChatBodyContainer::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 2.3px;
+}
+
+.hideScrollbar::-webkit-scrollbar-thumb {
+  background-color: #bc8cf2;
+  border-radius: 2.3px;
+}
+
+//TEXTMESSAGECONTAINER 
+
+.textMessageContainer {
+  display: flex;
+  word-wrap: break-word;
+  background: white;
+  border-radius: 10px;
+  min-width: 60px;
+  max-width: 300px;
+  flex-wrap: wrap;
+  padding: 15px;
+  margin: 20px;
+  display: flex;
+}
+
+.userMessage {
+  display: flex;
+  justify-content: end;
+}
+
+.peopleMessage {
+  display: flex;
+}
+
+.sentHoure {
+margin-left: 10px;
+margin-top: 10px;
+}
+
+.messageChatFooterContainer {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}

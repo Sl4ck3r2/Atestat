@@ -1,6 +1,5 @@
 import { Button, Form, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 import BackgroundLogin from '../background-login';
@@ -44,9 +43,7 @@ const LoginForm: FC<LoginFormProps> = ({ resetState, isSuccessfully, loading, on
   return (
     <BackgroundLogin>
       <div className={styles.formControlStyle}>
-        <div>
-          <h1 className={styles.loginText}>Login</h1>
-        </div>
+        <h1 className={styles.loginText}>Login</h1>
         <div className={styles.fildsStyle}>
           <Form
             name="basic"
