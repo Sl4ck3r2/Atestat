@@ -1,5 +1,5 @@
 import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Input } from 'antd';
+import { Button, ConfigProvider, Input } from 'antd';
 import { FC, ReactNode, useState } from 'react';
 
 import styles from './index.module.scss';
@@ -24,6 +24,7 @@ const ChatHeader: FC<ChatHeaderProps> = () => {
           prefix={<SearchOutlined />}
           placeholder="Search"
         />
+
         <Button
           style={{
             color: isPressed ? 'white' : '#AA14F0',
@@ -38,7 +39,7 @@ const ChatHeader: FC<ChatHeaderProps> = () => {
         />
       </div>
       <div className={styles.utils}>
-        <Button style={{ color: '#AA14F0' }} size="large" type="text">
+        <Button style={{ color: '#AA14F0', marginBottom: '5px' }} size="large" type="text">
           New Group
         </Button>
       </div>

@@ -1,4 +1,4 @@
-import { MessageOutlined, TeamOutlined } from '@ant-design/icons';
+import { MessageOutlined, TeamOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Space } from 'antd';
 import { FC } from 'react';
 
@@ -28,9 +28,14 @@ const ToolBar: FC = () => {
         />
         <div className={styles.toolName}>Friends</div>
       </Badge>
-      <Badge color="#AA14F0" offset={[-15, 1]} count={2}>
-        <Avatar shape="square" size="large" />
-        <div className={styles.toolName}>Conversation</div>
+      <Badge>
+        <Avatar
+          style={{ color: '#AA14F0', backgroundColor: '#EEEEEE' }}
+          icon={<UsergroupAddOutlined />}
+          shape="square"
+          size="large"
+        />
+        <div className={styles.toolName}>Add Friends</div>
       </Badge>
     </div>
   );
