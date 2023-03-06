@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import ChatContent from './chatContent';
 import MessageChatInput from './chatInput';
 import styles from './index.module.scss';
 import MessageChatBody from './messageChatBody';
@@ -10,7 +11,7 @@ const Chat: FC = () => {
     <div className={styles.container}>
       <MessageChatHeader />
       <div className={styles.bodyContainer}>
-        <MessageChatBody />
+        <ChatContent />
         <MessageChatInput />
       </div>
     </div>

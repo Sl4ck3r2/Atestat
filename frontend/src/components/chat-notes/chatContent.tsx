@@ -3,6 +3,7 @@ import { FC, useRef, useState } from 'react';
 import Conversation from './conversation';
 import Friend from './friend';
 import styles from './index.module.scss';
+import MessageChatBody from './messageChatBody';
 
 const ChatContent: FC = () => {
   const [showScrollbar, setShowScrollbar] = useState<boolean>(true);
@@ -30,15 +31,7 @@ const ChatContent: FC = () => {
       onScroll={handleScroll}
       className={`${styles.messageListContainer} ${showScrollbar ? '' : styles.hideScrollbar}`}
     >
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
+      <MessageChatBody />
     </div>
   );
 };
