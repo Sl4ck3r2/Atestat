@@ -1,22 +1,17 @@
-import { Layout } from 'antd';
-import { FC, ReactNode } from 'react';
-import { Outlet } from 'react-router-dom';
+import { FC } from 'react';
 
-import ChatHeader from './header';
+import MessageChatInput from './chatInput';
 import styles from './index.module.scss';
-import MessageList from './messageList';
-import ToolBar from './toolBar';
-interface ChatProps {
-  children?: ReactNode;
-}
+import MessageChatBody from './messageChatBody';
+import MessageChatHeader from './messageChatHeader';
 
-const Chat: FC<ChatProps> = () => {
+const Chat: FC = () => {
   return (
     <div className={styles.container}>
-      <ChatHeader />
+      <MessageChatHeader />
       <div className={styles.bodyContainer}>
-        <MessageList />
-        <ToolBar />
+        <MessageChatBody />
+        <MessageChatInput />
       </div>
     </div>
   );

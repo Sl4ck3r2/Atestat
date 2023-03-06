@@ -1,10 +1,10 @@
 import { FC, useRef, useState } from 'react';
 
-import FriendsList from './addFriendsList';
 import Conversation from './conversation';
+import Friend from './friend';
 import styles from './index.module.scss';
 
-const MessageList: FC = () => {
+const ChatContent: FC = () => {
   const [showScrollbar, setShowScrollbar] = useState<boolean>(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -30,19 +30,17 @@ const MessageList: FC = () => {
       onScroll={handleScroll}
       className={`${styles.messageListContainer} ${showScrollbar ? '' : styles.hideScrollbar}`}
     >
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
-      <FriendsList />
+      <Friend />
+      <Friend />
+      <Friend />
+      <Friend />
+      <Friend />
+      <Friend />
+      <Friend />
+      <Friend />
+      <Friend />
     </div>
   );
 };
 
-export default MessageList;
+export default ChatContent;

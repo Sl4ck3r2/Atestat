@@ -1,18 +1,17 @@
-import { Layout } from 'antd';
-import { FC, ReactNode } from 'react';
-import { Outlet } from 'react-router-dom';
+import { CameraOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Input, Layout } from 'antd';
+import { FC } from 'react';
 
 import styles from './index.module.scss';
-interface EmptyLayoutProps {
-  children?: ReactNode;
-}
 
-const EmptyLayout: FC<EmptyLayoutProps> = ({ children }) => {
+const MessageChatInput: FC = () => {
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Layout.Content>{children || <Outlet />}</Layout.Content>
-    </Layout>
+    <div className={styles.messageChatFooterContainer}>
+      <Button size="large" style={{ color: '#AA14F0' }} icon={<PlusOutlined />} type="text"></Button>
+      <Input size="large" style={{ borderRadius: '20px' }}></Input>
+      <Button size="large" style={{ color: '#AA14F0' }} icon={<CameraOutlined />} type="text"></Button>
+    </div>
   );
 };
 
-export default EmptyLayout;
+export default MessageChatInput;

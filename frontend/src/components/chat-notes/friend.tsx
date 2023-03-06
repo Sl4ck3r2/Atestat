@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 //   children?: ReactNode;
 // }
 
-const FriendsList: FC = () => {
+const Friend: FC = () => {
   return (
     <div className={styles.converationContainer}>
       <div>
@@ -24,8 +24,8 @@ const FriendsList: FC = () => {
             </p>
           </div>
           <div className={styles.frendsRequestOptions}>
+            <Button style={{ color: 'green', borderColor: 'green' }} icon={<CheckOutlined />} />
             <Button danger icon={<CloseOutlined />} />
-            <Button style={{ marginLeft: '15px', color: 'green', borderColor: 'green' }} icon={<CheckOutlined />} />
           </div>
         </div>
         <div className={styles.conversationBorder}></div>
@@ -34,4 +34,4 @@ const FriendsList: FC = () => {
   );
 };
 
-export default FriendsList;
+export default Friend;

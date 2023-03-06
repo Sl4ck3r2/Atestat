@@ -107,22 +107,22 @@
   margin-top: 5px;
 }
 
-//FriendsList 
+//FriendsList
 
-.frendsRequestOptions{
+.frendsRequestOptions {
   display: flex;
   margin-right: 15px;
-  margin-top:10px;
+  margin-top: 10px;
+  gap: 10px;
 }
 
 //MESSAGECHATHEADER
 
 .messageChatHeaderContainer {
   display: flex;
-  margin-top:10px;
+  margin-top: 10px;
   align-items: center;
   border-bottom: 1px solid grey;
-  
 }
 
 .messageChatHeaderImage {
@@ -130,10 +130,9 @@
   margin-left: 40px;
   align-items: center;
   margin-bottom: 5px;
-
 }
 
-.messageChatHeaderFriendName{
+.messageChatHeaderFriendName {
   margin-left: 10px;
 }
 
@@ -143,7 +142,13 @@
   overflow: auto;
   max-height: 500px;
   min-height: 500px;
-  background-color: #bc8cf2;
+}
+
+.messageChatBodyMessageContainer {
+  overflow: auto;
+  max-height: 500px;
+  min-height: 500px;
+  background-image: url('../images/background.jpg');
 }
 
 .messageChatBodyContainer::-webkit-scrollbar {
@@ -157,37 +162,44 @@
 }
 
 .hideScrollbar::-webkit-scrollbar-thumb {
-  background-color: #bc8cf2;
+  display: none;
   border-radius: 2.3px;
 }
 
-//TEXTMESSAGECONTAINER 
+//TEXTMESSAGECONTAINER
 
-.textMessageContainer {
+.textMessageContainerUser {
   display: flex;
-  word-wrap: break-word;
-  background: white;
-  border-radius: 10px;
+  justify-content: flex-end;
   min-width: 60px;
-  max-width: 300px;
-  flex-wrap: wrap;
-  padding: 15px;
   margin: 20px;
-  display: flex;
+  padding: 15px;
+  border-radius: 10px;
 }
 
-.userMessage {
+.textMessageContainerPeople {
   display: flex;
-  justify-content: end;
+  min-width: 60px;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
 }
 
-.peopleMessage {
+.message {
   display: flex;
+  max-width: 300px;
+  white-space: pre-line;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .sentHoure {
-margin-left: 10px;
-margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  margin-left: 15px;
+  font-size: 0.7rem;
 }
 
 .messageChatFooterContainer {
