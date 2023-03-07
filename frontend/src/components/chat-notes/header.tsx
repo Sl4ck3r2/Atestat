@@ -1,5 +1,5 @@
 import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, Input } from 'antd';
+import { Button, Input } from 'antd';
 import { FC, ReactNode, useState } from 'react';
 
 import styles from './index.module.scss';
