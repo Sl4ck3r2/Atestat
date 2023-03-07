@@ -1,9 +1,17 @@
 import { FC, useRef, useState } from 'react';
 
+import AddFriends from './addFriends';
+import Conversation from './conversation';
+import Friend from './friend';
 import styles from './index.module.scss';
 import Message from './message';
+import { WINDOW } from './window';
+interface ChatContentProps {
+  currentWindow: string;
+  handleWindow: (window: string) => void;
+}
 
-const ChatContent: FC = () => {
+const ChatContent: FC<ChatContentProps> = ({ currentWindow, handleWindow }) => {
   const [showScrollbar, setShowScrollbar] = useState<boolean>(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -27,9 +35,19 @@ const ChatContent: FC = () => {
   return (
     <div
       onScroll={handleScroll}
-      className={`${styles.messageChatBodyMessageContainer} ${showScrollbar ? '' : styles.hideScrollbar}`}
+      className={`${currentWindow === WINDOW.chat ? styles.chatContentMessages : styles.chatContentGeneral} ${
+        showScrollbar ? '' : styles.hideScrollbar
+      }`}
     >
-      <Message />
+      {currentWindow === WINDOW.chat ? (
+        <Message />
+      ) : currentWindow === WINDOW.friends ? (
+        <Friend />
+      ) : currentWindow === WINDOW.addFriends ? (
+        <AddFriends />
+      ) : (
+        <Conversation handleWindow={handleWindow} />
+      )}
     </div>
   );
 };

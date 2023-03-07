@@ -2,13 +2,13 @@ import { Avatar, Badge } from 'antd';
 import { FC } from 'react';
 
 import styles from './index.module.scss';
-// interface MessageListProps {
-//   children?: ReactNode;
-// }
-
-const Conversation: FC = () => {
+import { WINDOW } from './window';
+interface ConvarasationProps {
+  handleWindow: (window: string) => void;
+}
+const Conversation: FC<ConvarasationProps> = ({ handleWindow }) => {
   return (
-    <div className={styles.converationContainer}>
+    <div onClick={() => handleWindow(WINDOW.chat)} className={styles.converationContainer}>
       <div>
         <Avatar size={64} src="https://i.imgur.com/KniTFHh.jpg" />
       </div>
