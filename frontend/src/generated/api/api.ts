@@ -435,6 +435,53 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
+         * @summary Update role user
+         * @param {string} token 
+         * @param {number} [id] 
+         * @param {string} [email] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roleUpdatePut: async (token: string, id?: number, email?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('roleUpdatePut', 'token', token)
+            const localVarPath = `/role/update`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+            if (token !== undefined && token !== null) {
+                localVarHeaderParameter['token'] = String(token);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Return the curent user data.
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -609,6 +656,19 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Update role user
+         * @param {string} token 
+         * @param {number} [id] 
+         * @param {string} [email] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roleUpdatePut(token: string, id?: number, email?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roleUpdatePut(token, id, email, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Return the curent user data.
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -666,6 +726,18 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
+         * @summary Update role user
+         * @param {string} token 
+         * @param {number} [id] 
+         * @param {string} [email] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roleUpdatePut(token: string, id?: number, email?: string, options?: any): AxiosPromise<UserDto> {
+            return localVarFp.roleUpdatePut(token, id, email, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Return the curent user data.
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -709,6 +781,34 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         },
     };
 };
+
+/**
+ * Request parameters for roleUpdatePut operation in UserControllerApi.
+ * @export
+ * @interface UserControllerApiRoleUpdatePutRequest
+ */
+export interface UserControllerApiRoleUpdatePutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserControllerApiRoleUpdatePut
+     */
+    readonly token: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof UserControllerApiRoleUpdatePut
+     */
+    readonly id?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UserControllerApiRoleUpdatePut
+     */
+    readonly email?: string
+}
 
 /**
  * Request parameters for userCurrentGet operation in UserControllerApi.
@@ -794,6 +894,18 @@ export interface UserControllerApiUsersGetRequest {
  * @extends {BaseAPI}
  */
 export class UserControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary Update role user
+     * @param {UserControllerApiRoleUpdatePutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public roleUpdatePut(requestParameters: UserControllerApiRoleUpdatePutRequest, options?: AxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).roleUpdatePut(requestParameters.token, requestParameters.id, requestParameters.email, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Return the curent user data.

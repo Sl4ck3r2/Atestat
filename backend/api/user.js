@@ -68,6 +68,23 @@ router.get(
   }
 );
 
+router.put(
+  "/role/update",
+  verifyToken,
+  authRole([ROLE.SUPERADMIN]),
+  async (req, res) => {
+    const { id, email } = req.query;
+    await pool.query(`
+    UPDATE users_roles AS ur
+    SET role_id = ${id}
+    FROM users AS u
+    WHERE u.email = '${email}'
+    AND ur.user_id = u.id;`);
+
+    return res.status(200).json("Role has been updated");
+  }
+);
+
 router.put("/user/current", verifyToken, async (req, res) => {
   const data = await req.body;
   const emailIsValid = await isEmailValid(data.email);

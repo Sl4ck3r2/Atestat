@@ -77,6 +77,52 @@
         }
       }
     },
+    "/role/update": {
+      "put": {
+        "summary": "Update role user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "description": "Id role"
+            }
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string",
+              "description": "The email of the user to whom we are changing the role"
+            }
+          }
+        ],
+        "tags": [
+          "user-controller"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "summary": "Return the data from the pointed email",
