@@ -1,7 +1,9 @@
 import { FC } from 'react';
 
+import Chat from '../../../components/chat-notes/index';
+
 const EmptyLayout: FC = () => {
-  return <h1>Content</h1>;
+  return <Chat />;
 };
 
 export default EmptyLayout;

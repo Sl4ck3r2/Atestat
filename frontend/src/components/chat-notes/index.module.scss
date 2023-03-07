@@ -1,0 +1,209 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 15px;
+  background-color: #eeeeee;
+}
+
+.bodyContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+//CHATHEADER
+
+.conversationHeader {
+  border-bottom: 1px solid gray;
+}
+
+.title {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 3rem;
+}
+
+.searchBar {
+  padding: 10px;
+  display: flex;
+}
+
+.utils {
+  display: flex;
+  justify-content: end;
+}
+
+//CONVERSATION
+
+.converationContainer {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: stretch;
+}
+
+.converationData {
+  display: flex;
+  flex: 1;
+  margin-left: 10px;
+  justify-content: space-between;
+}
+
+.conversationBorder {
+  border-bottom: 1px gray solid;
+  margin-left: 10px;
+}
+
+.conversationDataContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.converationTime {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: flex-end;
+}
+
+//MESSAGELIST
+
+.messageListContainer {
+  max-height: 500px;
+  min-height: 500px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.messageListContainer::-webkit-scrollbar {
+  width: 6px;
+  display: block;
+}
+
+.messageListContainer::-webkit-scrollbar-thumb {
+  background-color: #bc8cf2;
+  border-radius: 2.3px;
+}
+
+.hideScrollbar::-webkit-scrollbar-thumb {
+  background-color: #eeeeee;
+  border-radius: 2.3px;
+}
+
+//TOOLBAR
+
+.toolBarContainer {
+  padding: 15px;
+  border-top: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.toolName {
+  margin-top: 5px;
+}
+
+//FriendsList
+
+.frendsRequestOptions {
+  display: flex;
+  margin-right: 15px;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+//MESSAGECHATHEADER
+
+.messageChatHeaderContainer {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  border-bottom: 1px solid grey;
+}
+
+.messageChatHeaderImage {
+  display: flex;
+  margin-left: 40px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.messageChatHeaderFriendName {
+  margin-left: 10px;
+}
+
+//MESSAGECHATBODY
+
+.messageChatBodyContainer {
+  overflow: auto;
+  max-height: 500px;
+  min-height: 500px;
+}
+
+.messageChatBodyMessageContainer {
+  overflow: auto;
+  max-height: 500px;
+  min-height: 500px;
+  background-image: url('../images/background.jpg');
+}
+
+.messageChatBodyContainer::-webkit-scrollbar {
+  width: 6px;
+  display: block;
+}
+
+.messageChatBodyContainer::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 2.3px;
+}
+
+.hideScrollbar::-webkit-scrollbar-thumb {
+  display: none;
+  border-radius: 2.3px;
+}
+
+//TEXTMESSAGECONTAINER
+
+.textMessageContainerUser {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 60px;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.textMessageContainerPeople {
+  display: flex;
+  min-width: 60px;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.message {
+  display: flex;
+  max-width: 300px;
+  white-space: pre-line;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.sentHoure {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  margin-left: 15px;
+  font-size: 0.7rem;
+}
+
+.messageChatFooterContainer {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}
