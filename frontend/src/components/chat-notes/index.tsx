@@ -9,7 +9,7 @@ import ToolBar from './toolBar';
 import { WINDOW } from './window';
 
 const Chat: FC = () => {
-  const [currentWindow, setCurrentWindos] = useState<string>(WINDOW.friends);
+  const [currentWindow, setCurrentWindos] = useState<string>(WINDOW.conversation);
 
   const handleWindow = (window: string) => {
     setCurrentWindos(window);
@@ -20,7 +20,11 @@ const Chat: FC = () => {
       {currentWindow === WINDOW.chat ? <MessageChatHeader handleWindow={handleWindow} /> : <ChatHeader />}
       <div className={styles.bodyContainer}>
         <ChatContent handleWindow={handleWindow} currentWindow={currentWindow} />
-        {currentWindow === WINDOW.chat ? <MessageChatInput /> : <ToolBar handleWindow={handleWindow} />}
+        {currentWindow === WINDOW.chat ? (
+          <MessageChatInput />
+        ) : (
+          <ToolBar selectedWindow={currentWindow} handleWindow={handleWindow} />
+        )}
       </div>
     </div>
   );

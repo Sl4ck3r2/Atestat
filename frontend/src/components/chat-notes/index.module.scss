@@ -148,7 +148,7 @@
   overflow: auto;
   max-height: 500px;
   min-height: 500px;
-  background-image: url('../images/background.jpg');
+  background-image: url('../images//chatBackground.png');
 }
 
 .chatContentMessages::-webkit-scrollbar {
@@ -195,16 +195,18 @@
 .textMessageContainerUser {
   display: flex;
   justify-content: flex-end;
-  min-width: 60px;
-  margin: 20px;
+  margin: 20px 0px 20px 20px;
+  margin-right: 0;
+  max-width: 10;
   padding: 15px;
   border-radius: 10px;
 }
 
 .textMessageContainerPeople {
   display: flex;
-  min-width: 60px;
-  margin: 20px;
+  max-width: 10;
+  margin: 20px 20px 20px 0;
+  margin-left: 0;
   padding: 15px;
   border-radius: 10px;
 }
