@@ -148,7 +148,7 @@
   overflow: auto;
   max-height: 500px;
   min-height: 500px;
-  background-image: url('https://camo.githubusercontent.com/854a93c27d64274c4f8f5a0b6ec36ee1d053cfcd934eac6c63bed9eaef9764bd/68747470733a2f2f7765622e77686174736170702e636f6d2f696d672f62672d636861742d74696c652d6461726b5f61346265353132653731393562366237333364393131306234303866303735642e706e67');
+  background-image: url('../images//chatBackground.png');
 }
 
 .chatContentMessages::-webkit-scrollbar {
@@ -195,16 +195,18 @@
 .textMessageContainerUser {
   display: flex;
   justify-content: flex-end;
-  min-width: 60px;
-  margin: 20px;
+  margin: 20px 0px 20px 20px;
+  margin-right: 0;
+  max-width: 10;
   padding: 15px;
   border-radius: 10px;
 }
 
 .textMessageContainerPeople {
   display: flex;
-  min-width: 60px;
-  margin: 20px;
+  max-width: 10;
+  margin: 20px 20px 20px 0;
+  margin-left: 0;
   padding: 15px;
   border-radius: 10px;
 }
