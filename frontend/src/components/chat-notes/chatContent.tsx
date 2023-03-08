@@ -40,7 +40,7 @@ const ChatContent: FC<ChatContentProps> = ({ currentWindow, handleWindow }) => {
       }`}
     >
       {currentWindow === WINDOW.chat ? (
-        <Message />
+        <Message provider={'user'} />
       ) : currentWindow === WINDOW.friends ? (
         <Friend />
       ) : currentWindow === WINDOW.addFriends ? (
