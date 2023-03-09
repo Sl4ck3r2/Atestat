@@ -10,7 +10,6 @@ router.get("/user/current", verifyToken, async (req, res) => {
       FROM users
       INNER JOIN users_roles
       ON users.id = users_roles.user_id
-      
       INNER JOIN roles
       ON users_roles.role_id = roles.id
       WHERE users_roles.user_id = '${id}'`);
@@ -116,7 +115,7 @@ router.get(
 
     try {
       const response =
-        await pool.query(`SELECT  users.first_name, users.last_name, users.email, users.created_at, roles.id,
+        await pool.query(`SELECT  users.first_name, users.last_name, users.profile_picture_url, users.email, users.created_at, roles.id,
     roles.role ,users_roles.user_id
     FROM users
     INNER JOIN users_roles
@@ -131,6 +130,7 @@ router.get(
           lastName: el.last_name,
           email: el.email,
           created_at: el.created_at,
+          profilePictureUrl: el.profile_picture_url,
           userRole: {
             id: el.id,
             name: el.role,

@@ -434,6 +434,7 @@
             "lastName": "string",
             "email": "string",
             "created_at": "string",
+            "profilePictureUrl": "string",
             "userRole": {
               "id": 0,
               "role": "SUPERADMIN"
