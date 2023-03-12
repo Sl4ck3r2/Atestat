@@ -7,26 +7,51 @@ import styles from './index.module.scss';
 //   children?: ReactNode;
 // }
 
-const Friend: FC = () => {
+const Friend: FC<any> = ({ data, addFriendRequest }) => {
+  const acceptFriendRequest = async (inf: any) => {
+    console.log(inf);
+    const URL =
+      'http://localhost:3001/api/accept-friend?' +
+      new URLSearchParams({
+        friendId: inf,
+      });
+    fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: localStorage.getItem('token') || '',
+      },
+    }).then((response) => {
+      if (response.status == 200) {
+        addFriendRequest(data.id);
+      }
+    });
+  };
   return (
     <div className={styles.converationContainer}>
       <div>
-        <Avatar size={64} src="https://i.imgur.com/KniTFHh.jpg" />
+        <Avatar size={64} src={data.profilePictureUrl} />
       </div>
       <div className={styles.conversationDataContainer}>
         <div className={styles.converationData}>
           <div>
             <h1>
-              <strong>Ruja Marcello</strong>
+              <strong>{data.firstName}</strong>
             </h1>
             <p>
-              <i>rujamarcello@yahoo.com</i>
+              <i>{data.lastName}</i>
             </p>
           </div>
-          <div className={styles.frendsRequestOptions}>
-            <Button style={{ color: 'green', borderColor: 'green' }} icon={<CheckOutlined />} />
-            <Button danger icon={<CloseOutlined />} />
-          </div>
+          {data.status === 'padding' ? (
+            <div className={styles.frendsRequestOptions}>
+              <Button
+                onClick={() => acceptFriendRequest(data.id)}
+                style={{ color: 'green', borderColor: 'green' }}
+                icon={<CheckOutlined />}
+              />
+              <Button danger icon={<CloseOutlined />} />
+            </div>
+          ) : null}
         </div>
         <div className={styles.conversationBorder}></div>
       </div>

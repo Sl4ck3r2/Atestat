@@ -161,6 +161,91 @@
         }
       }
     },
+    "/add-friend": {
+      "post": {
+        "summary": "Add friend routes",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "friendId",
+            "schema": {
+              "type": "integer",
+              "description": "Friend id"
+            }
+          }
+        ],
+        "tags": [
+          "chat-controller"
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend request sent"
+          }
+        }
+      }
+    },
+    "/reject-friend": {
+      "post": {
+        "summary": "Reject an friend",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "friendId",
+            "schema": {
+              "type": "integer",
+              "description": "Friend id"
+            }
+          }
+        ],
+        "tags": [
+          "chat-controller"
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend request rejected"
+          }
+        }
+      }
+    },
+    "/add-friend-list": {
+      "get": {
+        "summary": "Lists of remain friends for user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "chat-controller"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all unfriends"
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "summary": "Return the list of all users",
@@ -495,6 +580,9 @@
     },
     {
       "name": "user-controller"
+    },
+    {
+      "name": "chat-controller"
     }
   ]
 }
