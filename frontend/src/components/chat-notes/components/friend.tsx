@@ -7,7 +7,7 @@ import styles from '../index.module.scss';
 //   children?: ReactNode;
 // }
 
-const Friend: FC<any> = ({ data, addFriendRequest }) => {
+const Friend: FC<any> = ({ data, addFriendRequest, deleteUserFromList }) => {
   const acceptFriendRequest = async (id: any) => {
     const URL =
       'http://localhost:3001/api/accept-friend?' +
@@ -23,6 +23,25 @@ const Friend: FC<any> = ({ data, addFriendRequest }) => {
     }).then((response) => {
       if (response.status == 200) {
         addFriendRequest(data.id);
+      }
+    });
+  };
+
+  const rejectFriendRequest = async (id: any) => {
+    const URL =
+      'http://localhost:3001/api/reject-friend?' +
+      new URLSearchParams({
+        friendId: id,
+      });
+    fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: localStorage.getItem('token') || '',
+      },
+    }).then((response) => {
+      if (response.status == 200) {
+        deleteUserFromList(data.id);
       }
     });
   };
@@ -49,7 +68,7 @@ const Friend: FC<any> = ({ data, addFriendRequest }) => {
                 style={{ color: 'green', borderColor: 'green' }}
                 icon={<CheckOutlined />}
               />
-              <Button danger icon={<CloseOutlined />} />
+              <Button onClick={() => rejectFriendRequest(data.id)} danger icon={<CloseOutlined />} />
             </div>
           ) : null}
         </div>

@@ -28,6 +28,7 @@ const ChatContent: FC<ChatContentProps> = ({ currentWindow, handleWindow }) => {
     });
     setData(updatedData);
   };
+
   useEffect(() => {
     switch (currentWindow) {
       case WINDOW.addFriends: {
@@ -93,7 +94,14 @@ const ChatContent: FC<ChatContentProps> = ({ currentWindow, handleWindow }) => {
       ) : currentWindow === WINDOW.friends ? (
         data &&
         data.map((element: any) => {
-          return <Friend addFriendRequest={addFriendRequest} key={element.id} data={element} />;
+          return (
+            <Friend
+              deleteUserFromList={deleteUserFromList}
+              addFriendRequest={addFriendRequest}
+              key={element.id}
+              data={element}
+            />
+          );
         })
       ) : currentWindow === WINDOW.addFriends ? (
         data &&
