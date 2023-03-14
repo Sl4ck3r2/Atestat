@@ -1,24 +1,30 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import { Avatar, Button } from 'antd';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
-import api from '../../utils/api';
-import styles from './index.module.scss';
+import styles from '../index.module.scss';
 interface AddFriendsProps {
   data: any;
   deleteUserFromList: any;
 }
 const AddFriends: FC<AddFriendsProps> = ({ data, deleteUserFromList }) => {
-  const sendFriendRequest = async (id: number) => {
-    try {
-      await api.chat.addFriendPost({ friendId: id, token: localStorage.getItem('token') || '' }).then((res) => {
-        if (res.status === 200) {
-          deleteUserFromList(id);
-        }
+  const sendFriendRequest = async (id: any) => {
+    const URL =
+      'http://localhost:3001/api/add-friend?' +
+      new URLSearchParams({
+        friendId: id,
       });
-    } catch (error) {
-      console.log(error);
-    }
+    fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: localStorage.getItem('token') || '',
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        deleteUserFromList(id);
+      }
+    });
   };
   return (
     <div className={styles.converationContainer}>

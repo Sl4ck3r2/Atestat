@@ -1,12 +1,12 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
-import api from '../../utils/api';
-import AddFriends from './addFriends';
-import Conversation from './conversation';
-import Friend from './friend';
-import styles from './index.module.scss';
-import Message from './message';
-import { WINDOW } from './window';
+import api from '../../../utils/api';
+import AddFriends from '../components/addFriends';
+import Conversation from '../components/conversation';
+import Friend from '../components/friend';
+import Message from '../components/message';
+import styles from '../index.module.scss';
+import { WINDOW } from '../window';
 interface ChatContentProps {
   currentWindow: string;
   handleWindow: (window: string) => void;

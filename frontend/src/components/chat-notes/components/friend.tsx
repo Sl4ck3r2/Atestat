@@ -1,19 +1,18 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button } from 'antd';
+import { Avatar, Button } from 'antd';
 import { FC } from 'react';
 
-import styles from './index.module.scss';
+import styles from '../index.module.scss';
 // interface MessageListProps {
 //   children?: ReactNode;
 // }
 
 const Friend: FC<any> = ({ data, addFriendRequest }) => {
-  const acceptFriendRequest = async (inf: any) => {
-    console.log(inf);
+  const acceptFriendRequest = async (id: any) => {
     const URL =
       'http://localhost:3001/api/accept-friend?' +
       new URLSearchParams({
-        friendId: inf,
+        friendId: id,
       });
     fetch(URL, {
       method: 'POST',
@@ -27,6 +26,7 @@ const Friend: FC<any> = ({ data, addFriendRequest }) => {
       }
     });
   };
+
   return (
     <div className={styles.converationContainer}>
       <div>
